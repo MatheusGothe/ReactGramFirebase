@@ -1,0 +1,62 @@
+.stories{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 6px;
+}   
+.div_storie{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    cursor: pointer;
+}
+.storieImgOuterWrapper {
+    width: 50px;
+    height: 50px;
+    padding: 2px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, #D91FCD, #FF9300);
+}
+
+.storieImgWrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+}
+
+.storieImg {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+
+
+.x_icon{
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    z-index:999;
+    position: relative;
+    width: 100%;   
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+
+@media (max-width: 600px) {
+    .stories .react-insta-stories {
+      width: 100% !important;
+      height: 100vh !important;
+    }
+  }
+  

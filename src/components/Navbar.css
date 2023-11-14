@@ -1,0 +1,206 @@
+/* Estilos padrão para o navbar */
+#nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000;
+    border-bottom: 1px solid #363636;
+    padding: 0.1em .1em;
+    transition: background-color 0.5s ease;
+    animation: fadeIn 1s ease-in-out;
+  }
+  #nav-exit {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000;
+    border-bottom: 1px solid #363636;
+    padding: 0.1em .1em;
+
+    transition: background-color 0.5s ease;
+    animation: fadeOut 1s ease-in-out forwards;
+  }
+
+/* Defina a animação de entrada */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    font-size: 1px;
+  }
+  to {
+    opacity: 1;
+    font-size: 16;
+  }
+}
+
+/* Defina a animação de saída */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    font-size: 16px;
+  }
+  to {
+    opacity: 0;
+    font-size: 0;
+  }
+}
+
+
+
+
+.users-search{
+  position: absolute;
+  width: 40%;
+  height: 40%;
+  background-color: white;
+  left: 30%;
+  top: 25%;
+  z-index: 20;
+  border-radius: 8px;
+  overflow-y: auto ;
+}
+.div-search{
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+}
+.div-search:hover{
+  background-color: rgb(245, 241, 233);
+  border-radius: 8px;
+}
+.search-img{
+  width: 35px;
+  max-width: 40px;
+  border-radius: 50%;
+  max-height: 50px;
+  height: 35px;
+}
+
+#nav a {
+  margin-left: 5px;
+}
+
+.bs-search{
+  cursor: pointer;
+}
+
+#search-form{
+    position: relative;
+    width: 20%;
+}
+
+#search-form svg{
+    position: absolute;
+    top: 10px;
+    left: 9px;
+}
+
+#search-form input{
+    padding-left: 2.5em;
+    border: none;
+    border-radius: 5px;
+    width: 120%;
+    margin: 0;
+}
+
+#nav-links {
+    display: flex;
+    align-items: center;
+}
+
+#nav-links li{
+    margin-right: 1em;
+}
+
+#nav-links span{
+    cursor: pointer;
+}
+
+#nav-links svg {
+    font-size: 1.5em;
+}
+
+
+/* Estilos para dispositivos menores */
+@media only screen and (max-width: 600px) {
+  #nav {
+    flex-wrap: wrap;
+    padding: 0.5em;
+  }
+  .users-search{
+    width: 60%;
+    left: 5%;
+    top: 10%;
+  }
+
+  #search-form {
+    width: 100%;
+    margin-bottom: 1em;
+  }
+
+  #search-form input {
+    box-sizing: border-box;
+    font-size: 0.8em;
+    padding: 0.5em;
+    padding-left: 2em; /* Adicionando espaço esquerdo para o ícone */
+    width: 100%;
+
+  }
+
+  #nav-links {
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  #nav-links li {
+    margin-right: 0;
+  }
+  #search-form svg {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }  
+  #search-form input::placeholder {
+    padding-left: 2px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  #nav {
+    flex-wrap: wrap;
+    padding: 0.5em;
+  }
+
+  #search-form {
+    width: 100%;
+    margin-bottom: 1em;
+  }
+
+  #search-form input {
+    box-sizing: border-box;
+    font-size: 0.8em;
+    padding: 0.5em;
+    padding-left: 2em; /* Adicionando espaço esquerdo para o ícone */
+    width: 100%;
+
+  }
+
+  #nav-links {
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  #nav-links li {
+    margin-right: 0;
+  }
+  #search-form svg {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }  
+  #search-form input::placeholder {
+    padding-left: 2px;
+  }
+}
+

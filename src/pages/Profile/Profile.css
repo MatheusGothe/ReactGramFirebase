@@ -1,0 +1,375 @@
+#profile{
+    width: 50%;
+    margin: 0 auto;
+}
+
+.profile-header{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 1em;
+    border-bottom: 1px solid #363636;
+}
+.btn-ver{
+  background-color: #121212;
+  padding: 0;
+}
+.img-t{
+  margin-bottom: 2px;
+}
+.btn-foll{
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #5936f4;
+  border-radius: 4px;
+  border: none;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
+}
+.img-t:hover{
+  background-color: #EF5350;
+}
+.p-foll{
+  cursor: pointer;
+  width: 100%;
+}
+.profile-header img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 2em;
+    object-fit: cover;
+    object-position: center;
+}
+/* PHOTOS -------------------------*/.new-photo{
+  padding: 1em;
+  border-bottom: 1px solid #363636;
+}
+
+.photos-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.photo{
+  width: 32%;
+  margin: 0.3%;
+}
+
+.photo img{
+  width: 100%;
+  height: 200px; /* ou outra altura desejada */
+  object-fit: cover;
+  object-position: center;
+}
+
+.actions{
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.actions svg {
+    cursor: pointer;
+}
+
+.edit-photo{
+    margin-bottom: 1em;
+}
+.edit-photo img{
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+
+
+
+
+
+
+@media only screen and (max-width: 760px) {
+  #profile {
+    width: 80%;
+  }
+  .new-photo {
+    max-width: 100%; /* define que o formulário ocupará toda a largura da tela */
+    padding: 10px; /* reduz o espaçamento interno */
+  }
+  .profile-header {
+    padding: 0.5em;
+    font-size: 0.8em;
+  }
+  
+  .profile-header img {
+    width: 80px;
+    height: 80px;
+    margin-right: 1em;
+  }
+}
+
+/* Para telas com largura máxima de 400px */
+@media only screen and (max-width: 400px) {
+  #profile {
+    width: 100%;
+  }
+  label {
+    display: block; /* torna os rótulos em blocos para evitar que sejam espremidos */
+    margin-bottom: 10px; /* adiciona um espaçamento inferior entre os elementos do formulário */
+  }
+  .new-photo input[type="text"]{
+    width: 93%;
+  }
+  input[type="text"],
+  input[type="file"],
+  input[type="submit"] {
+    display: block; /* torna os elementos de entrada em blocos */
+    width: 100%; /* define que os elementos de entrada ocupem toda a largura disponível */
+    margin-bottom: 10px; /* adiciona um espaçamento inferior entre os elementos de entrada */
+  }
+  
+  .profile-header {
+    padding: 0.2em;
+    font-size: 0.6em;
+    flex-direction: column;
+  }
+  
+  .profile-header img {
+    width: 60px;
+    height: 60px;
+    margin-right: 0;
+    margin-bottom: 0.5em;
+  }
+}
+/* LOADING */
+.load{
+    font-family: sans-serif;
+    color: #737373;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 200px;
+    animation: text 3s ease-in-out infinite;
+}
+@keyframes text {
+    50%{
+        color: #121212;
+    }
+}
+.loading{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.ring{
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    animation: ring 2s linear infinite;
+}
+@keyframes ring{
+    0%{
+        transform: rotate(0deg);
+        box-shadow: 1px 5px 2px #e65c00;
+    }
+    50%{
+        transform: rotate(180deg);
+        box-shadow: 1px 5px 2px #18b201;
+    }
+    100%{
+        transform: rotate(360deg);
+        box-shadow: 1px 5px 2px #0456c8;
+    }
+}
+.ring::before{
+    position: absolute;
+    content: '';
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(255,255, 255, .3);
+}
+.container_following{
+  position: fixed;
+  background-color: #fff;
+  top: 20%;
+  left: 30%;
+  width: 40%;
+  height: 25%;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.container_followers{
+  background-color: rgb(197, 196, 196);
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 0px 3px 6px 3px rgba(245, 242, 242, 0.3);
+  position: fixed;
+  top: 20%;
+  left: 30%;
+  width: 40%;
+  height: 40%;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.cont{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 16px;
+  background-color:  rgb(197, 196, 196);
+  border-radius: 8px 8px 0 0;
+  border-bottom: 1px ridge black;
+  width: 100%;
+  box-sizing: border-box;
+}
+.follow_title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.followers{
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+}
+.btn_seguir_followers{
+  margin-right: 0;
+}
+.img_name{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/*CONTEXT MENU ---------------------------*/
+
+
+.context-menu {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.context-menu .menu-item {
+  padding: 1px 2px;
+  cursor: pointer;
+  color: #000;
+}
+
+.context-menu .menu-item:hover {
+  background-color: #f2f2f2;
+}
+@media screen and (max-width: 760px) {
+  .edit-photo input[type="text"],
+  .edit-photo input[type="submit"],
+  .edit-photo button {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  
+  .edit-photo input[type="submit"],
+  .edit-photo button {
+    display: block;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .container_followers{
+    width: 60%;
+    left: 20%;
+  }
+}
+@media screen and (max-width: 420px) {
+  .container_followers{
+    width: 70%;
+    left: 15%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .edit-photo input[type="text"],
+  .edit-photo input[type="submit"],
+  .edit-photo button {
+    font-size: 14px;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
+  .edit-photo input[type="submit"],
+  .edit-photo button {
+    font-size: 16px;
+    display: block;
+    width: 100%;
+  }
+}
+
+
+.follow_title {
+  color: black;
+  font-weight: 500;
+}
+
+.followers .follower {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.followers img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.followers div {
+  display: flex;
+  flex-direction: row;
+}
+
+.followers span {
+  font-size: 14px;
+  color: black;
+}
+
+.followers span:first-child {
+  font-weight: 500;
+}
+
+.followers span:last-child {
+  color: rgb(0, 0, 0);
+}
+
+.ltf{
+  color: black;
+}
+
+

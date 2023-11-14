@@ -1,0 +1,140 @@
+#edit-profile{
+    border: 1px solid 363636;
+    background-color: black;
+    padding: 1.5em 2em;
+    max-width: 40%;
+    margin: 2em auto;
+    text-align: center;
+}
+
+.subtitle{  
+    color: #CCC;
+}
+
+.profile-image{
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    object-position: center;
+}
+/* Estilos para o componente de loading */.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.worm {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #363636;
+  animation: worm-rotate 1s infinite linear;
+}
+
+input {
+  background-color: #3b3b3b;
+  color: #AAA;
+  border: 1px solid #555;
+  border-radius: 2px;
+  padding: 10px 8px;
+  outline: none;
+  margin-bottom: 0.6em;
+}
+
+@keyframes worm-rotate {
+  0% {
+    transform: rotate(0deg) translateX(0);
+  }
+  50% {
+    transform: rotate(180deg) translateX(50%);
+  }
+  100% {
+    transform: rotate(360deg) translateX(0);
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  #edit-profile{
+      max-width: 90%;
+      padding: 1em;
+  }
+  #edit-profile form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  form label{
+    width: 100%;
+  }
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="date"],
+  textarea {
+    width: 93%;
+  }
+  #edit-profile form input[type="text"],input[type="file"]{
+    width: 93%;
+  }
+  .subtitle{
+      font-size: 0.7em;
+  }
+
+  .profile-image{
+      width: 80px;
+      height: 80px;
+      margin-bottom: 0.5em;
+  }
+
+  .loading {
+      font-size: 0.8em;
+  }
+}
+
+    
+  
+@media only screen and (max-width: 600px) {
+    #edit-profile{
+    max-width: 70%;
+    padding: 1em;
+    }
+    
+    .subtitle{
+    font-size: 0.8em;
+    }
+    
+    .profile-image{
+    width: 100px;
+    height: 100px;
+    margin-bottom: 0.5em;
+    }
+  }
+
+  input[type="file"]::-webkit-file-upload-button {
+    background-color: #2196F3;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  input[type="file"]::-moz-file-upload-button {
+    background-color: #2196F3;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  input[type="file"]::file-selector-button {
+    background-color: #192733;
+    color: #fff;
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    cursor: pointer;
+  }

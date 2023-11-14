@@ -1,0 +1,48 @@
+#home .btn {
+    display: block;
+    max-width: 80px;
+    text-align: center;
+    margin: 0.5em 0 2em 0;
+}
+
+.no-photos{
+    text-align: center;
+}
+.teste {
+    box-sizing: border-box;
+}
+.no-photos a {
+    color: #0094f6;
+}
+
+.heart-like {
+    position:fixed;
+    top: 55%;/* posição 15px abaixo da parte inferior da div pai */
+    left: 45%;
+    box-sizing: border-box;
+    font-size: 600%;
+    animation-name: heart-like;
+    animation-duration: 0.8s;
+    animation-timing-function: ease-in-out;
+  }
+
+  @keyframes heart-like {
+    0% {
+      transform: scale(1);
+    }
+    20% {
+      transform: scale(1.3);
+    }
+    40% {
+      transform: scale(1);
+    }
+    60% {
+      transform: scale(1.2);
+    }
+    80% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
