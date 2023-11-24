@@ -73,7 +73,7 @@ function App() {
           <Route path='/photos/:id' element={currentUser ? <Photo /> : <Navigate to='/login' />} />
           <Route path='/search' element={currentUser ? <Search /> : <Navigate to='/login' />} />
           <Route path='/reset-password' element={<ResetPassword />} />
-          <Route path='/*' element={'Nada para ver aqui'} />
+          <Route path='/*' element={<Navigate to='/' />} />
         </Routes>
        </div>
         <Footer />
