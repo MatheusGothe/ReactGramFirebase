@@ -91,7 +91,7 @@ const Navbar = ({showNavbar}) => {
     return user.username.toLowerCase().includes(query.toLowerCase())
    })
 
-   console.log(newUsers)
+
    setUsers(newUsers)
     
   }
