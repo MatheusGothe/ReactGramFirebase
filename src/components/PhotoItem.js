@@ -73,7 +73,7 @@ const PhotoItem = ({ user:currentUser,photo,onImageLoad }) => {
               onDragStart={(e) => e.preventDefault()}
             />
             <span className={styles.nome}>
-              <Link to={`/users/${photo.userId}`}> {photo.user.name}</Link>
+              <Link to={`/users/${photo.userId}`}> {photo.user.username}</Link>
             </span>
           </div>
         ) : (

@@ -30,11 +30,14 @@ import { useRef } from "react";
 
 import { GlobalContext, GlobalDispatchContext } from '../state/context/GlobalContext'
 import { logout } from "../slices/authSlice";
+import { searchUsers } from "../services/userService";
+
 
 
 const Navbar = ({showNavbar}) => {
 
   const dispatch = useContext(GlobalDispatchContext)
+
 
   const {user} = useContext(GlobalContext)
 
@@ -42,8 +45,13 @@ const Navbar = ({showNavbar}) => {
   const usersSearchRef = useRef();
 
   const [query,setQuery] = useState('')
+  const [users,setUsers] = useState('')
   let search = query
   const navigate = useNavigate()
+
+  useEffect(() => {
+    getSearchData()
+  },[query])
   
   const userAuth = auth.currentUser
 
@@ -75,6 +83,19 @@ const Navbar = ({showNavbar}) => {
     e.preventDefault()
   }
 
+  const getSearchData = async() => {
+   const users = await searchUsers(query)
+
+
+   const newUsers = users.filter((user) => {
+    return user.username.toLowerCase().includes(query.toLowerCase())
+   })
+
+   console.log(newUsers)
+   setUsers(newUsers)
+    
+  }
+
   return (
     <>
     <nav id={'nav'} >
@@ -92,30 +113,30 @@ const Navbar = ({showNavbar}) => {
       </form>
       {query && (
   <div className="users-search" ref={usersSearchRef}>
-    {/* {users && (
+     {users && (
       users.map((user) => (
         <div
           className="div-search"
           onClick={() => {
             setQuery('');
-            navigate(`/users/${user._id}`);
+            navigate(`/users/${user.id}`);
           }}
-          key={user._id}
+          key={user.id}
         >
           <img
             className="search-img"
-            src={`${uploads}/users/${user.profileImage}`}
+            src={`${user.profileImage}`}
             alt=""
           />
-          <p style={{ color: "black" }}>{user.name} </p>
+          <p style={{ color: "black" }}>{user.username} </p>
         </div>
-      )) */}
-    {/* )} */}
-    {/* {users.length < 1 && (
+      )) 
+     )} 
+     {users.length < 1 && (
       <>
         <p style={{ color:"black"}} >Nenhum usuário encontrado</p>
       </>
-    ) } */}
+    ) } 
   </div>
 )}
      <ul id="nav-links">
