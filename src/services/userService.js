@@ -1,5 +1,5 @@
 import { arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore'
-import { auth, db } from '../lib/firebase'
+import { auth, db, storage } from '../lib/firebase'
 import {api, requestConfig} from '../utils/config'
 
 // Get user details
@@ -254,18 +254,19 @@ const getUserFollowing = async (data) => {
     }
   };
 
-  const searchUsers = async(query,token) => {
-
-
-    const config = requestConfig("GET",null, token)
-
+export const searchUsers = async(input) => {
+   
     try {
+        const usersRef = collection(db,'users')
+        const snapShot = await getDocs(usersRef)
 
-        const res = await fetch(api + "/users/search?q=" + query,config)
-                    .then((res) => res.json())
-                    .catch((err) => err)
+        let users = []
 
-        return res
+        snapShot.forEach(doc => {
+            users.push(doc.data())
+        })
+        
+        return users
 
         
     } catch (error) {
@@ -286,7 +287,6 @@ const userService = {
     unFollowUser,
     getUserFollowers,
     getUserFollowing,
-    searchUsers,
     followUserContainer,
     unFollowUserContainer
 }
