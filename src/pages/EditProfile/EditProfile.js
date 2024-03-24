@@ -32,9 +32,7 @@ const EditProfile = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("")
   const [oldPassword, setOldPassword] = useState("")
-  const [nameError, setNameError] = useState(false)
-  const [passwordError, setPasswordError] = useState(false)
-  const [ErrorTamPassword,setErrorTamPassword] = useState(false)
+  const [isChanged,setIsChanged] = useState(false)
 
   useEffect(() => {
      profile(auth.currentUser.uid, dispatch)
@@ -52,6 +50,7 @@ const EditProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(user)
+
     const userData = {
       uid: user.id,
       email,
@@ -59,14 +58,17 @@ const EditProfile = () => {
       oldPassword
     }
 
-
     if (profileImage) {
       userData.profileImage = profileImage;
     }
     if (email){
       userData.email = email
     }
-    if (bio) {
+    if(email == ''){
+      dispatchAction(dispatch,'SET_ERROR','E-mail não pode ser vazio')
+      return
+    }
+    if(bio) {
       userData.bio = bio;
     }
 
@@ -81,7 +83,6 @@ const EditProfile = () => {
       return;
      }
     if(password.length < 6){
-
       return
     }
     userData.password = password;
@@ -124,13 +125,17 @@ const EditProfile = () => {
       <Loading />
     )
   }
+
+  const handleChangle = (setter) => (e) => {
+    setter(e.target.value)
+    setIsChanged(true)
+  }
   
 
   return (
     <div id="edit-profile">
       {console.log(loadingForm)}
       <h2>Edite seus dados</h2>
-
       <p className="subtitle">
         Adicione uma imagem de perfil e conte mais sobre você.
       </p>
@@ -151,13 +156,13 @@ const EditProfile = () => {
         <input
           type="text"
           placeholder="Nome"
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleChangle(setName)}
           value={name || ""}
         />
         <input
           type="email"
           placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleChangle(setEmail)}
           value={email || ""}
         />
         <label>
@@ -169,16 +174,16 @@ const EditProfile = () => {
           <input
             type="text"
             placeholder="Descriçao do perfil"
-            onChange={(e) => setBio(e.target.value)}
+            onChange={handleChangle(setBio)}
             value={bio || ""}
           />
         </label>
-        <label>
+        {/* <label>
           <span>Deseja alterar a senha? Digite sua senha antiga</span>
           <input
             type="password"
             placeholder="Digite a sua senha antiga"
-            onChange={(e) => setOldPassword(e.target.value)}
+            onChange={handleChangle(setOldPassword)}
             value={oldPassword || ""}
           />
         </label>
@@ -187,7 +192,7 @@ const EditProfile = () => {
           <input
             type="password"
             placeholder="Digite a sua nova senha"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleChangle(setPassword)}
             value={password || ""}
           />
         </label>
@@ -196,11 +201,11 @@ const EditProfile = () => {
           <input
             type="password"
             placeholder="Digite a sua nova senha"
-            onChange={(e) => setConfirmNewPassword(e.target.value)}
+            onChange={handleChangle(setConfirmNewPassword)}
             value={confirmNewPassword || ""}
           />
-        </label>
-        {!loadingForm && <input type="submit" value="Atualizar" />}
+        </label> */}
+        {!loadingForm && isChanged && <input type="submit" value="Atualizar" />}
         {loadingForm && <input type="submit" value="Aguarde..." disabled />}
         {error && <Message msg={error} type="error" />}
         {message && <Message msg={message} type="success" />}
