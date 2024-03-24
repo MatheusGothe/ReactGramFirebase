@@ -95,12 +95,12 @@ const Navbar = ({showNavbar}) => {
    setUsers(newUsers)
     
   }
-
+  console.log(userAuth)
   return (
     <>
     <nav id={'nav'} >
       <Link to="/">ReactGram</Link>
-      {user != '' && (
+      {userAuth != null && (
         <form id="search-form" onSubmit={handleSearch} ref={searchFormRef} >
         <BsSearch className="bs-search" onClick={handleSearch} />
         <input

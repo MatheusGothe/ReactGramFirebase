@@ -1,0 +1,355 @@
+.photo_item {
+    left: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    margin-bottom: 30px;
+    width: 50%;
+    justify-content: flex-start;
+  }
+  
+  .linha {
+    padding-bottom: 5%;
+    border-bottom: 1px dotted #f1f0f075;
+    width: 100%;
+  }
+  
+  .comment_icon {
+    margin-left: 3%;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+  svg .comment_icon{
+    border: 5px solid blue;
+  }
+  .comment_icon:hover {
+    opacity: 0.5;
+  }
+  .like {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    width: 50%;
+    margin-left: 25%;
+    justify-content: flex-start;
+    padding-right: 40px;
+  }
+  
+  .photo_author {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+  }
+  
+  .photo_pequena {
+    max-width: 25%;
+    margin: 0;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .photo_pequena img {
+    max-width: 40px;
+    max-height: 40px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .nome {
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 10px;
+  }
+  
+  .img {
+    max-width: 760px;
+    width: 100%;
+    height: auto;
+    min-width: 80%;
+  }
+  
+  
+  #deslike{
+    cursor: pointer;
+    font-size: 1.5em;
+    color: rgba(243, 6, 57, 0.842);
+    animation: heartbeat 0.3s;
+  }
+  
+  #like {
+    cursor: pointer;
+    font-size: 1.5em
+  }
+  #like:hover {
+    opacity: 0.5;
+  }
+  .like p {
+    margin-left: 10px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .photo_item .heart_like {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    font-size: 90px;
+    animation-name: heart-like;
+    animation-duration: 0.8s;
+    animation-timing-function: ease-in-out;
+  }
+  
+  .author_info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-width: 50%;
+    width: 100%;
+    margin-bottom: -5px;
+    margin-left: auto;
+    position: relative;
+  }
+  
+  .author_info .photo_pequena {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    object-fit:cover;
+  }
+  
+  .author_info .photo_pequena img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+  }
+  .author_info img{
+    width: 35px;
+    max-width: 40px;
+    border-radius: 50%;
+    max-height: 50px;
+    height: 35px;
+  }
+  .author_info .nome {
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 5px;
+  }
+  
+  .author_info .username {
+    font-size: 14px;
+    color: #8e8e8e;
+  }
+  @keyframes heartbeat {
+    /* 0% {
+      transform: scale(.75);
+    } 
+    20% {
+      transform: scale(1);
+    }
+    40% {
+      transform: scale(.75);
+    }
+    */
+    60% {
+      transform: scale(1.25);
+    }
+    80% {
+      transform: scale(1.25);
+    }
+    100% {
+      transform: scale(1);
+    } 
+  }
+  
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0; /* inicia com opacidade 0 */
+    }
+    to {
+      opacity: 1; /* termina com opacidade 1 */
+    }
+  }
+  
+  @keyframes heart-like {
+    0% {
+      transform: scale(1);
+    }
+    20% {
+      transform: scale(1.3);
+    }
+    40% {
+      transform: scale(1);
+    }
+    60% {
+      transform: scale(1.2);
+    }
+    80% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  @media screen and (max-width: 720px) {
+    .photo_item {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 80%;
+      margin-left: 0;
+      left: 10%;
+    }
+  
+    .comment_icon {
+      font-size: 1em;
+    }
+   
+  
+    .photo_item .heart_like{
+      font-size: 70px;
+    }
+    .photo_item .img {
+      min-width: 100%;
+    }
+    .photo_item .author_info {
+      margin-left: 0;
+      min-width: 100%;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .photo_author {
+      margin: 0;
+      margin-top: 10px;
+      text-align: center;
+    }
+    .photo_author .nome {
+      margin-left: 0;
+      margin-top: 5px;
+      font-size: 12px;
+    }
+    .photo_pequena {
+      width: 20%;
+      height: 20%;
+      margin-right: 5px;
+      margin-left: 0;
+    }
+    span{
+      padding-left: 5px;
+    }
+    .photo_pequena img {
+      max-width: 30px;
+      max-height: 30px;
+    }
+    .author_info .photo_pequena {
+      margin-right: 5px;
+      margin-left: 0;
+    }
+    .author_info .photo_pequena img {
+      max-width: 30px;
+      max-height: 30px;
+    }
+    .author_info .nome {
+      font-size: 14px;
+    }
+    .author_info .username {
+      display: none;
+    }
+    .like {
+      align-self: flex-start;
+      margin-left: 10%;
+      margin-top: 0;
+    }
+    .like p {
+      font-size: 12px;
+      margin-left: 5px;
+    }
+    #like {
+      font-size: 1em;
+    }
+    #deslike {
+      font-size: 1em;
+    }
+  }
+  @media screen and (max-width: 400px) {
+    .photo_item {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 80%;
+      margin-left: 0;
+      left: 10%;
+    }
+    .photo_item .img {
+      min-width: 100%;
+    }
+    .photo_item .author_info {
+      margin-left: 0;
+      min-width: 100%;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .photo_author {
+      margin: 0;
+      margin-top: 10px;
+      text-align: center;
+    }
+    .photo_author .nome {
+      margin-left: 0;
+      margin-top: 5px;
+      font-size: 12px;
+    }
+    .photo_pequena {
+      width: 20%;
+      height: 20%;
+      margin-right: 5px;
+      margin-left: 0;
+    }
+    span{
+      padding-left: 5px;
+    }
+    .photo_pequena img {
+      max-width: 30px;
+      max-height: 30px;
+    }
+    .author_info .photo_pequena {
+      margin-right: 5px;
+      margin-left: 0;
+    }
+    .author_info .photo_pequena img {
+      max-width: 30px;
+      max-height: 30px;
+    }
+    .author_info .nome {
+      font-size: 14px;
+    }
+    .author_info .username {
+      display: none;
+    }
+    .like {
+      align-self: flex-start;
+      margin-top: 0px;
+    }
+    .like p {
+      font-size: 12px;
+      margin-left: 5px;
+    }
+    #like {
+      font-size: 1em;
+    }
+    #deslike {
+      font-size: 1em;
+    }
+  }
+  
+  
+  
