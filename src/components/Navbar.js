@@ -100,6 +100,7 @@ const Navbar = ({showNavbar}) => {
     <>
     <nav id={'nav'} >
       <Link to="/">ReactGram</Link>
+      {user != '' && (
         <form id="search-form" onSubmit={handleSearch} ref={searchFormRef} >
         <BsSearch className="bs-search" onClick={handleSearch} />
         <input
@@ -108,9 +109,10 @@ const Navbar = ({showNavbar}) => {
           placeholder="Pesquisar"
           onChange={(e) => setQuery(e.target.value)}
           value={query}
-           disabled={!auth}
-        />
+          disabled={!auth}
+          />
       </form>
+          )}
       {query && (
   <div className="users-search" ref={usersSearchRef}>
      {users && (
@@ -142,11 +144,11 @@ const Navbar = ({showNavbar}) => {
      <ul id="nav-links">
   {userAuth ? (
     <>
-      <li>
+      {/* <li>
         <NavLink to='/postStorie'>
           <BsPlusCircleFill />
         </NavLink>
-      </li>
+      </li> */}
       <li>
         <NavLink to="/">
           <BsHouseDoorFill />
