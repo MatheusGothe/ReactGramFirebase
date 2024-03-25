@@ -128,18 +128,17 @@ export const login = async (user, dispatch) => {
   }
 };
 
-export const resetPassword = createAsyncThunk(
-  "auth/resetPassword",
-  async (email, thunkAPI) => {
-    try {
-      await sendPasswordResetEmail(auth, email);
-    } catch (error) {
-      console.log(error);
-      // Extrair e retornar apenas a mensagem de erro
-      return thunkAPI.rejectWithValue(error.message);
-    }
+export const resetPassword = async(email) => {
+  console.log(email)
+  try {
+    
+    await sendPasswordResetEmail(auth,email)
+    console.log('Email enviado com sucesso')
+
+  } catch (error) {
+    console.log(error)
   }
-);
+}
 
 // Sign in a user
 export const sendVerificattionEmail = createAsyncThunk(
