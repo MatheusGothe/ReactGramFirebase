@@ -5,15 +5,17 @@ import {auth} from '../../lib/firebase'
 import'./ResetPassword.css'
 import { useDispatch, useSelector } from "react-redux";
 import { resetMessage, resetPassword } from "../../slices/authSlice";
+import { useContext } from "react";
+import { GlobalContext, GlobalDispatchContext } from "../../state/context/GlobalContext";
 
 
 const ResetPassword = () => {
 
   const [email, setEmail] = useState("");
 
-  const dispatch = useDispatch()
+  const dispatch = useContext(GlobalDispatchContext)
 
-  const {loading,message,error,success} = useSelector(state => state.auth)
+  const {loading,message,error,success} = useContext(GlobalContext)
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -25,12 +27,12 @@ const ResetPassword = () => {
         await recaptchaVerifier.render();
         await recaptchaVerifier.verify();
 
-        dispatch(resetPassword(email))
+        resetPassword(email)
 
 
         setTimeout(() => {
           recaptchaVerifier.clear()
-          dispatch(resetMessage())
+         // dispatch(resetMessage())
         }, 3000);
     
 
