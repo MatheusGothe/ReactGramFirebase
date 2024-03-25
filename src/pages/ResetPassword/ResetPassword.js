@@ -7,17 +7,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetMessage, resetPassword } from "../../slices/authSlice";
 import { useContext } from "react";
 import { GlobalContext, GlobalDispatchContext } from "../../state/context/GlobalContext";
+import { dispatchAction } from "../../utils/functions/dispatchActions";
 
 
 const ResetPassword = () => {
 
   const [email, setEmail] = useState("");
-
+  const [loading,setLoading] = useState(false)
   const dispatch = useContext(GlobalDispatchContext)
 
-  const {loading,message,error,success} = useContext(GlobalContext)
+  const {message,error,success} = useContext(GlobalContext)
 
   const handleSubmit = async(e) => {
+    setLoading(true)
     e.preventDefault();
     
         // Habilita a reCAPTCHA.
@@ -27,15 +29,22 @@ const ResetPassword = () => {
         await recaptchaVerifier.render();
         await recaptchaVerifier.verify();
 
-        resetPassword(email)
+        const res = await resetPassword(email)
+        if(res){
+
+          let errorMessage = res.split('(')[1].split(')')[0].split('/')[1];
+          errorMessage = errorMessage.charAt(0).toUpperCase() + errorMessage.slice(1) + ".";
+
+          dispatchAction(dispatch,'SET_ERROR',errorMessage)
+        }
 
 
-        setTimeout(() => {
-          recaptchaVerifier.clear()
-         // dispatch(resetMessage())
-        }, 3000);
+
+
+        recaptchaVerifier.clear()
+
     
-
+      setLoading(false)
 
   };
 
