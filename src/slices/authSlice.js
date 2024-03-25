@@ -20,6 +20,8 @@ import {
   where,
 } from "firebase/firestore";
 
+import translate from "translate";
+
 const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = {
@@ -131,12 +133,17 @@ export const login = async (user, dispatch) => {
 export const resetPassword = async(email) => {
   console.log(email)
   try {
-    
-    await sendPasswordResetEmail(auth,email)
-    console.log('Email enviado com sucesso')
 
+    const res = await sendPasswordResetEmail(auth,email)
+    console.log('Email enviado com sucesso')
+    
+    return null
   } catch (error) {
-    console.log(error)
+    console.log(error.message)
+    var translateMessage = await translate(error.message,{from:'en',to:'pt'})
+
+    console.log(translateMessage)
+    return translateMessage
   }
 }
 
