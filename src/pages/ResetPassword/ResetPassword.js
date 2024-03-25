@@ -31,11 +31,11 @@ const ResetPassword = () => {
 
         const res = await resetPassword(email)
         if(res){
-
           let errorMessage = res.split('(')[1].split(')')[0].split('/')[1];
           errorMessage = errorMessage.charAt(0).toUpperCase() + errorMessage.slice(1) + ".";
-
           dispatchAction(dispatch,'SET_ERROR',errorMessage)
+        } else{
+          dispatchAction(dispatch,'SET_MESSAGE',"Email de recuperação enviado.")
         }
 
 
