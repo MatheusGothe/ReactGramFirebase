@@ -50,7 +50,6 @@ const Home = ({storyData}) => {
   };
   
 
-  console.log(user)
 
   if(loading && !imagesLoaded){
     return <Loading />

@@ -18,11 +18,13 @@ import { uploadImage } from "../utils/functions/UploadPhoto";
 import { deleteObject, getStorage, ref } from "firebase/storage";
 import {v4 as uuidv4} from 'uuid'
 import { useRef } from "react";
+import { dispatchAction } from "../utils/functions/dispatchActions";
 //Publish a photo
 const publishPhoto = async (photo, dispatch, photos) => {
   const { title,image } = photo;
   const user = auth.currentUser;
   console.log(photo)
+
   // Crie o documento primeiro
   const userDocRef = doc(db, "users", user.uid);
   const document = {
@@ -63,8 +65,7 @@ const publishPhoto = async (photo, dispatch, photos) => {
 
     // Se o upload falhar, delete o documento
     await deleteDoc(docRef);
-
-    throw error; // Rejeite a promessa com o erro
+    return {error:error}
   }
 };
 

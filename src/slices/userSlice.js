@@ -41,6 +41,7 @@ export const profile = async (id, dispatch) => {
 export const updateProfile = async (user, dispatch) => {
   
   const {
+    username,
     uid: id,
     bio,
     name,
@@ -64,7 +65,7 @@ export const updateProfile = async (user, dispatch) => {
 
     // Preparar os dados para atualizar no Firestore
     const userDoc = doc(db, "users", id);
-    const updateData = { bio, name, email };
+    const updateData = { bio,username,name, email };
 
     // Se um arquivo foi fornecido, faça o upload e adicione o URL aos dados de atualização
     if (file) {
@@ -73,7 +74,7 @@ export const updateProfile = async (user, dispatch) => {
       );
       updateData.profileImage = url;
     }
-
+    console.log(updateData)
     // Atualizar os dados do usuário no Firestore
     await updateDoc(userDoc, updateData);
 

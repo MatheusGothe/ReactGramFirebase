@@ -33,6 +33,7 @@ const EditProfile = () => {
   const [confirmNewPassword, setConfirmNewPassword] = useState("")
   const [oldPassword, setOldPassword] = useState("")
   const [isChanged,setIsChanged] = useState(false)
+  const [emailPassword,setEmailPassword] = useState(false)
 
   useEffect(() => {
      profile(auth.currentUser.uid, dispatch)
@@ -45,6 +46,10 @@ const EditProfile = () => {
       setBio(user.bio);
     }
   }, [user]);
+
+    useEffect(() => {
+      email == auth.currentUser.email ? setEmailPassword(false) : setEmailPassword(true)
+    },[email])
   
 
   const handleSubmit = async (e) => {
@@ -58,6 +63,11 @@ const EditProfile = () => {
       oldPassword
     }
 
+
+    if(name){
+      userData.name = name
+      userData.username = name
+    }
     if (profileImage) {
       userData.profileImage = profileImage;
     }
@@ -70,6 +80,11 @@ const EditProfile = () => {
     }
     if(bio) {
       userData.bio = bio;
+    }
+    
+    if(!name){
+      dispatchAction(dispatch,'SET_ERROR','Nome não pode ser vazio')
+      return
     }
 
     if(email !== auth.currentUser.email && !oldPassword){
@@ -94,7 +109,6 @@ const EditProfile = () => {
         loading:true
       }
     })
-    console.log(userData)
     const data =  await updateProfile(userData)
 
     dispatch({
@@ -127,14 +141,13 @@ const EditProfile = () => {
   }
 
   const handleChangle = (setter) => (e) => {
-    setter(e.target.value)
-    setIsChanged(true)
+    setter(e.target.value);
+    setIsChanged(true);
   }
   
 
   return (
     <div id="edit-profile">
-      {console.log(loadingForm)}
       <h2>Edite seus dados</h2>
       <p className="subtitle">
         Adicione uma imagem de perfil e conte mais sobre você.
@@ -143,13 +156,11 @@ const EditProfile = () => {
         <img
           className="profile-image"
           src={
-            previewImage
-              ? URL.createObjectURL(previewImage)
-              : user.profileImage
+            previewImage ? URL.createObjectURL(previewImage) : user.profileImage
           }
           alt={user.name}
           onContextMenu={(e) => e.preventDefault()}
-          onDragStart={(e) =>e.preventDefault()}
+          onDragStart={(e) => e.preventDefault()}
         />
       )}
       <form onSubmit={handleSubmit}>
@@ -166,6 +177,18 @@ const EditProfile = () => {
           value={email || ""}
         />
         <label>
+          {emailPassword &&
+        <label>
+          <span>Informe a senha para alterar o e-mail</span>
+          <input
+            type="password"
+            placeholder="Informe sua senha"
+            onChange={handleChangle(setOldPassword)}
+            value={oldPassword || ""}
+          />
+        </label> 
+    
+          }
           <span>Imagem de Perfil</span>
           <input type="file" onChange={handleFile} />
         </label>
@@ -186,8 +209,8 @@ const EditProfile = () => {
             onChange={handleChangle(setOldPassword)}
             value={oldPassword || ""}
           />
-        </label>
-        <label>
+        </label> */}
+        {/* <label>
           <span>Digite sua nova senha</span>
           <input
             type="password"
@@ -209,7 +232,7 @@ const EditProfile = () => {
         {loadingForm && <input type="submit" value="Aguarde..." disabled />}
         {error && <Message msg={error} type="error" />}
         {message && <Message msg={message} type="success" />}
-        { /*
+        {/*
         {nameError && <Message msg={"O nome precisa ter 2 caracteres "} type="error" />}
         {passwordError && <Message msg={"Senhas nao coincidem"} type="error" />}
         {ErrorTamPassword && <Message msg={"A senha precisa ter no mínimo 6 caracteres"} type="error" /> } */}

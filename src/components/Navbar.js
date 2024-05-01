@@ -95,7 +95,6 @@ const Navbar = ({showNavbar}) => {
    setUsers(newUsers)
     
   }
-  console.log(userAuth)
   return (
     <>
     <nav id={'nav'} >

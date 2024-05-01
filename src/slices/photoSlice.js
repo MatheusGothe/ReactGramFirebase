@@ -22,12 +22,10 @@ export const publishPhoto = async (photo, dispatch, photos) => {
   dispatchAction(dispatch, "SET_LOADING", { isLoading: true });
 
   const res = await photoService.publishPhoto(photo, dispatch, photos);
-
   dispatchAction(dispatch, "SET_LOADING", { isLoading: false });
-
-  if (res.error) {
-    console.log(res.error);
-    return res.error;
+  if(res.error) {
+    console.log('caiu')
+    return res.error.message;
   }
 };
 

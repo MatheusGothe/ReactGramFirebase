@@ -47,6 +47,7 @@ const Profile = () => {
     const [editId, setEditId] = useState('')
     const [editImage,setEditImage] = useState('')
     const [editTitle, setEditTitle] = useState('')
+    const fileInput = useRef()
 
     const {id} = useParams()
 
@@ -67,6 +68,7 @@ const Profile = () => {
   
 
     const handleFile = (e) => {
+
         const image = e.target.files[0];
         setImage(image)
       };
@@ -82,7 +84,6 @@ const Profile = () => {
    }
 
    const handleDelete = async(photoId) => {
-      console.log(photoId)
 
       await deletePhoto(photoId,dispatch,photos)
 
@@ -111,7 +112,9 @@ const Profile = () => {
       dispatchAction(dispatch,'SET_ERROR','O título é obrigatório')
       return
     }
+    console.log(image)
     if(!image){
+
       dispatchAction(dispatch,'SET_ERROR','É necessário enviar uma imagem')
       return
     }
@@ -121,25 +124,24 @@ const Profile = () => {
       image
     }
 
-    await publishPhoto(photo,dispatch,photos)
-
-    setTitle('')
-
-    dispatchAction(dispatch,'SET_MESSAGE','Foto publicada')
-    
-
+    const res = await publishPhoto(photo,dispatch,photos)
+  
+      if(res){
+        dispatchAction(dispatch,'SET_ERROR',res)
+        return
+      }
+      setTitle('')
+      fileInput.current.value = ''
+      dispatchAction(dispatch,'SET_MESSAGE','Foto publicada')
     
    }
 
     
     // SHOW FOLLOWERS
     const handleShowFollowers = async() => {
-      console.log('chamou')
       await getUserFollowers(user,dispatch)
       
-      
       setShowFollowers(true)
-
 
     }
 
@@ -162,7 +164,6 @@ const Profile = () => {
 
     }
 
-
     const handleFollow = (user) => {
 
       const followData = {
@@ -184,7 +185,6 @@ const Profile = () => {
       await followUserContainer(followData,dispatch)
 
     }
-    console.log(user)
     const handleUnFollowContainer = async(user) => {
 
       const unFollowData= {
@@ -264,7 +264,7 @@ const isFollowing = user.followers && user.followers.some((follower) => {
               </label>
               <label>
                 <span>Imagem:</span>
-                <input type="file" onChange={handleFile} />
+                <input type="file" onChange={handleFile} ref={fileInput} />
               </label>
               {!isLoading && <input type="submit" value="Postar" />}
               {isLoading && <input type="submit" disabled value="Aguarde..." />}

@@ -34,7 +34,7 @@ const PhotoItemHome = ({photo,handleDoubleClick,showHeart,clicked}) => {
     const {user} = useSelector((state) => state.auth )
     const { loading, error, message} = useSelector((state) => state.photo)
     const [likes, setLikes] = useState(photo.likes);
-   // const [showHeart, setShowHeart] = useState(false);
+
   
   const resetMessage = useResetComponentMessage(dispatch)
 
@@ -46,37 +46,6 @@ const PhotoItemHome = ({photo,handleDoubleClick,showHeart,clicked}) => {
   const [commentText,setCommentText] = useState('')
 //  const [clicked,setCliked] = useState(false)
 
- 
-
-  const handleLike = () => {
-    dispatch(like(photo._id));
-    setLikes([...likes, user._id]);
-    console.log('likfdafdasfsae')
-  };
-
-  const handleDeslike = () => {
-    dispatch(deslike(photo._id));
-    setLikes(likes.filter((like) => like !== user._id));
-    console.log(deslike);
-  };
-
-
-  const handleComment = (e) =>{
-    e.preventDefault()
-
-    
-    const commentData = {
-      comment: commentText,
-      id: photo._id
-    }
-    
-   dispatch(comment(commentData))
-
-   setCommentText('')
-
-   resetMessage()
-
- }
 
 
  if(loading){
@@ -84,27 +53,12 @@ const PhotoItemHome = ({photo,handleDoubleClick,showHeart,clicked}) => {
  }
 
 
- const handleRemoveComment = (CommentId) => {
-
-  console.log(id)
-  console.log(CommentId)
-  const commentData = {
-     CommentId,
-     id,
-     token
-  }
-
-  dispatch(removeComment(commentData))
-  
-  resetMessage()
-    
-};
 
   return (
     <div className={styles.photo_item}>
     {showHeart ? (
       <div className={styles.heart_like}>
-        <BsHeartFill />
+        <BsHeartFill  />
       </div>
     ) : ''}
     <div className={styles.photo_author}>
