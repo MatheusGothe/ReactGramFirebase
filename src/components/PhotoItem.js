@@ -30,8 +30,7 @@ const PhotoItem = ({ user:currentUser,photo,onImageLoad }) => {
     setTimeout(() => {
       setShowHeart(false);
     }, 1500);
-    console.log(photo.likes)
-    console.log(currentUser)
+
     // Check if the user has already liked the photo
     if(photo.likes.includes(currentUser.id)){
       console.log("User has already liked this photo.");

@@ -67,6 +67,12 @@ const LikeECommentContainer = ({
   const handleComment = (e) => {
     e.preventDefault();
 
+    console.log(commentText.trim())
+    if(commentText == '' || commentText.trim() == ''){
+      dispatchAction(dispatch,"SET_ERROR","Comentário não pode estar vazio.")
+      return
+    }
+
     const commentData = {
       comment: commentText,
       id: photo.photoId,
@@ -122,7 +128,6 @@ const LikeECommentContainer = ({
 
   const showOrHideComments = async(photo) => {
     
-
     if (showComments === true) {
       setShowComments(false);
 
@@ -279,7 +284,6 @@ const LikeECommentContainer = ({
                       </Link>
                     )}
                   </div>
-                  {console.log(comment)}
                   <p className={styles.comment_comment}>{comment.comment}</p>
                   {user.id === photo.userId || comment.userId === user.id ? (
                     <FaTrashAlt
