@@ -38,6 +38,7 @@ const Home = ({storyData}) => {
 
 
   useEffect(() => {
+    
     getPhotos(userAuth,dispatch).then((photos)=> {
       setImagesLoaded(false)
     })

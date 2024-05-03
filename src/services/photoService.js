@@ -19,11 +19,25 @@ import { deleteObject, getStorage, ref } from "firebase/storage";
 import {v4 as uuidv4} from 'uuid'
 import { useRef } from "react";
 import { dispatchAction } from "../utils/functions/dispatchActions";
-//Publish a photo
+
+// Função para obter as dimensões da imagem
+const getImageDimensions = (url) => {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.src = url;
+    image.onload = () => {
+      resolve({ width: image.naturalWidth, height: image.naturalHeight });
+    };
+    image.onerror = (error) => {
+      reject(error);
+    };
+  });
+};
+
+// Publicar uma foto
 const publishPhoto = async (photo, dispatch, photos) => {
-  const { title,image } = photo;
+  const { title, image } = photo;
   const user = auth.currentUser;
-  console.log(photo)
 
   // Crie o documento primeiro
   const userDocRef = doc(db, "users", user.uid);
@@ -43,14 +57,19 @@ const publishPhoto = async (photo, dispatch, photos) => {
 
   try {
     // Depois faça o upload da imagem
-    const url = await uploadImage({ photo:image, photoId }, (progress) => {
+    const url = await uploadImage({ photo: image, photoId }, (progress) => {
       console.log(`upload ${progress}`);
     });
 
-    // Atualize o documento com a URL da imagem
-    await updateDoc(docRef, { photoUrl: url, photoId });
+    // Obtenha as dimensões da imagem
+    const { width, height } = await getImageDimensions(url);
+
+    // Atualize o documento com a URL da imagem e as dimensões
+    await updateDoc(docRef, { photoUrl: url, photoId, width, height });
 
     document.photoUrl = url; // Atualize a URL da foto no objeto do documento local
+    document.width = width; // Adicione a largura da imagem ao objeto do documento local
+    document.height = height; // Adicione a altura da imagem ao objeto do documento local
 
     dispatch({
       type: "SET_PHOTOS",
@@ -65,7 +84,7 @@ const publishPhoto = async (photo, dispatch, photos) => {
 
     // Se o upload falhar, delete o documento
     await deleteDoc(docRef);
-    return {error:error}
+    return { error: error };
   }
 };
 

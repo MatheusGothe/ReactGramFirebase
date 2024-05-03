@@ -1,30 +1,32 @@
 //import "./PhotoItem.css";
-import styles from './PhotoItem.module.css'
+import styles from "./PhotoItem.module.css";
 import { uploads } from "../utils/config";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
-import { GlobalContext, GlobalDispatchContext } from '../state/context/GlobalContext';
+import {
+  GlobalContext,
+  GlobalDispatchContext,
+} from "../state/context/GlobalContext";
 
 // Animations
-import Loading from './Loading';
-import Lottie from 'react-lottie-player'
-import LoadingAnimation from '../utils/assets/loadingAnimation.json'
-import LikeECommentContainer from './LikeECommentContainer';
-import { deslike, like } from '../slices/photoSlice';
-import { auth } from '../lib/firebase';
+import Loading from "./Loading";
+import Lottie from "react-lottie-player";
+import LoadAnimationImage from "../utils/assets/loadAnimationImage.json";
+import LikeECommentContainer from "./LikeECommentContainer";
+import { deslike, like } from "../slices/photoSlice";
+import { auth } from "../lib/firebase";
 
-const PhotoItem = ({ user:currentUser,photo,onImageLoad }) => {
+const PhotoItem = ({ user: currentUser, photo, onImageLoad }) => {
+  const dispatch = useContext(GlobalDispatchContext);
 
-  const dispatch = useContext(GlobalDispatchContext)
-
-
-  const {isLoading:loading} = useContext(GlobalContext)
+  const { isLoading: loading } = useContext(GlobalContext);
   const [likes, setLikes] = useState(photo.likes);
   const [showHeart, setShowHeart] = useState(false);
+  const [loadImage, setLoadImage] = useState(false);
 
-  const handleDoubleClick = async(photo) => {
+  const handleDoubleClick = async (photo) => {
     // Show the heart regardless of whether the user has liked the photo or not
     setShowHeart(true);
     setTimeout(() => {
@@ -32,27 +34,26 @@ const PhotoItem = ({ user:currentUser,photo,onImageLoad }) => {
     }, 1500);
 
     // Check if the user has already liked the photo
-    if(photo.likes.includes(currentUser.id)){
+    if (photo.likes.includes(currentUser.id)) {
       console.log("User has already liked this photo.");
       return;
     }
-  
-    await handleLike(photo)
-  }
-  
-  const handleLike = async(photo) => {
 
-    await like(photo,dispatch)
+    await handleLike(photo);
+  };
 
+  const handleLike = async (photo) => {
+    await like(photo, dispatch);
+  };
 
-  }
+  const handleDeslike = async (photo) => {
+    await deslike(photo, dispatch);
+  };
 
-  const handleDeslike = async(photo) => {
-
-    await deslike(photo,dispatch)
-
-  }
-
+  const handleImageLoad = () => {
+    setLoadImage(true);
+    onImageLoad(true);
+  };
 
   return (
     <div className={styles.photo_item}>
@@ -99,16 +100,39 @@ const PhotoItem = ({ user:currentUser,photo,onImageLoad }) => {
       </div>
       {photo.photoUrl && (
         <>
-          {loading ? (
-            <Lottie
-              className="lottie"
-              loop
-              animationData={LoadingAnimation}
-              play
-            />
-          ) : (
-            ""
-          )}
+            {loadImage ? null : (
+                <div
+                  style={{
+                    width: "100%",
+                    paddingTop: `${(photo.height / photo.width) * 100}%`,
+                    backgroundColor: "#121212",
+                    position: "relative",
+                    borderRadius:'5px'
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                    }}
+                  >
+                    <Lottie
+                      className="lottie"
+                      style={{
+                        width: 80,
+                        height: 80,
+                        margin: "0 auto",
+                        color:'black'
+                      }}
+                      loop
+                      animationData={LoadAnimationImage}
+                      play
+                    />
+                  </div>
+                </div>
+              )}
           <img
             className={styles.img}
             id={styles.imgPhoto}
@@ -117,16 +141,17 @@ const PhotoItem = ({ user:currentUser,photo,onImageLoad }) => {
             alt={photo.title}
             onContextMenu={(e) => e.preventDefault()}
             onDragStart={(e) => e.preventDefault()}
-            onLoad={onImageLoad}
+            onLoad={() => setLoadImage(true)}
           />
         </>
       )}
-            <LikeECommentContainer
-            photo={photo}
-            user={currentUser}
-            handleDeslike={handleDeslike}
-            handleLike={handleLike}
-          /> 
+
+      <LikeECommentContainer
+        photo={photo}
+        user={currentUser}
+        handleDeslike={handleDeslike}
+        handleLike={handleLike}
+      />
     </div>
   );
 };

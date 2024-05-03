@@ -5,10 +5,10 @@ import { auth, storage } from "../../lib/firebase";
 // Função para fazer o upload da imagem
 const uploadImage = async({photo:image,photoId}, onProgress) => {
   const user = auth.currentUser
-
+   console.log(image)
   // Verifique o tipo de arquivo
-  if (!['image/jpeg', 'image/jpg','image/png'].includes(image.type)) {
-    throw new Error('Formato de arquivo inválido. Por favor, carregue um arquivo .jpg, .jpeg ou png');
+  if (!['image/jpeg', 'image/jpg','image/png','image/avif'].includes(image.type)) {
+    throw new Error('Formato de arquivo inválido.');
   }
 
   const storageRef = ref(storage, `images/${photoId}`)

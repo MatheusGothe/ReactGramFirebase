@@ -22,6 +22,7 @@ export const publishPhoto = async (photo, dispatch, photos) => {
   dispatchAction(dispatch, "SET_LOADING", { isLoading: true });
 
   const res = await photoService.publishPhoto(photo, dispatch, photos);
+  
   dispatchAction(dispatch, "SET_LOADING", { isLoading: false });
   if(res.error) {
     console.log('caiu')
@@ -328,7 +329,6 @@ export const getPhotos = async (user,dispatch) => {
 
   const data = await photoService.getPhotos(user);
 
-  console.log(data);
   dispatch({
     type: "SET_PHOTOS",
     payload: {
