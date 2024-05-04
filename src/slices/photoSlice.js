@@ -97,27 +97,17 @@ export const deletePhoto = async (id, dispatch, photos) => {
 };
 
 // Update a photo
-export const updatePhoto = createAsyncThunk(
-  "photo/update",
-  async (photoData, thunkAPI) => {
-    const token = thunkAPI.getState().auth.user.token;
+export const updatePhoto = async(data) => {
+ 
 
-    const data = await photoService.updatePhoto(
-      { title: photoData.title },
-      photoData.id,
-      token
-    );
+  const res = await photoService.updatePhoto(data)
+  
 
-    // Check for erros
-    if (data.errors) {
-      return thunkAPI.rejectWithValue(data.errors[0]);
-    }
-
-    return data;
-  }
-);
+}
 // Get photo by id
+
 export const getPhoto = async (id, dispatch) => {
+  console.log('entrou')
   dispatch({
     type: "SET_LOADING",
     payload: {
@@ -125,17 +115,11 @@ export const getPhoto = async (id, dispatch) => {
     },
   });
   const data = await photoService.getPhoto(id);
-  console.log(data)
+
   if (data?.error) {
     console.log(data.error);
   }
 
-  dispatch({
-    type: "SET_LOADING",
-    payload: {
-      isLoading: false,
-    },
-  });
   const photo = [data.post]
   dispatch({
     type: "SET_PHOTOS",
@@ -150,6 +134,12 @@ export const getPhoto = async (id, dispatch) => {
       
     }
   })
+  dispatch({
+    type: "SET_LOADING",
+    payload: {
+      isLoading: false,
+    },
+  });
   return data;
 };
 

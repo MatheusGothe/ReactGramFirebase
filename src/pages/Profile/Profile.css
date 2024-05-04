@@ -78,12 +78,20 @@
 }
 
 .edit-photo{
-    margin-bottom: 1em;
+  margin-bottom: 1em;
+  transition: all 0.5s ease;
 }
+
 .edit-photo img{
-    width: 100%;
-    margin-bottom: 1em;
+  max-width: 468px;
+  max-height: 580px;
+  width: 100%;
+  height: auto;
+  min-width: 80%;
+  object-fit: cover;
+  border-radius: 7px;
 }
+
 
 
 
@@ -144,6 +152,7 @@
     margin-bottom: 0.5em;
   }
 }
+
 /* LOADING */
 .load{
     font-family: sans-serif;

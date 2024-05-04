@@ -20,11 +20,12 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import LoadingBall from '../../components/LoadingBall'
 import { auth } from '../../lib/firebase'
 import { followUser, followUserContainer, getUserDetails, getUserFollowers, getUserFollowing, unFollowUser, unFollowUserContainer } from '../../slices/userSlice'
-import { deletePhoto, publishPhoto, resetMessage } from '../../slices/photoSlice'
+import { deletePhoto, publishPhoto, resetMessage, updatePhoto } from '../../slices/photoSlice'
 import { GlobalContext, GlobalDispatchContext } from '../../state/context/GlobalContext'
 import { dispatchAction } from '../../utils/functions/dispatchActions'
 import ShowFollows from '../../components/ShowFollows'
-
+import { Slide, ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 const Profile = () => {
 
     const dispatch = useContext(GlobalDispatchContext)
@@ -47,8 +48,10 @@ const Profile = () => {
     const [editId, setEditId] = useState('')
     const [editImage,setEditImage] = useState('')
     const [editTitle, setEditTitle] = useState('')
+    const [titleToEdit,setTitleToEdit] = useState('')
     const fileInput = useRef()
-
+    const [loadingEditForm,setLoadingEditForm] = useState(false)
+   
     const {id} = useParams()
 
     // New form and edit forms ref
@@ -79,7 +82,31 @@ const Profile = () => {
       editPhotoForm.current.classList.toggle("hide")
    }
 
-   const handleUpdate = () => {
+
+   const handleUpdate = (e) => {
+    e.preventDefault()
+    if(editTitle == titleToEdit){
+      dispatchAction(dispatch,'SET_ERROR','Titulo não pode ser o mesmo.')
+      return
+    }
+    setLoadingEditForm(true)
+    
+
+    const data = {
+      id: editId,
+      title: editTitle
+    }
+
+    const res = updatePhoto(data)
+
+    toast.success('Foto atualizada')
+    
+
+    console.log(data)
+
+
+    setLoadingEditForm(false)
+    hideOrShowForms()
 
    }
 
@@ -94,13 +121,15 @@ const Profile = () => {
       if(editPhotoForm.current.classList.contains("hide")){
           hideOrShowForms()
       }
-
-      setEditId(photo._id)
+      setTitleToEdit(photo.title)
+      setEditId(photo.photoId)
       setEditTitle(photo.title)
-      setEditImage(photo.image)
+      setEditImage(photo.photoUrl)
    }
   
-   const handleCancelEdit = () => {
+   const handleCancelEdit = (e) => {
+    e.preventDefault()
+    console.log(e)
       hideOrShowForms()
  
    }
@@ -207,6 +236,7 @@ const isFollowing = user.followers && user.followers.some((follower) => {
  
   return (
     <div id="profile">
+      <ToastContainer autoClose={2000} transition={Slide} hideProgressBar draggable />
       <div className="profile-header">
         {user.profileImage && (
           <img
@@ -275,7 +305,7 @@ const isFollowing = user.followers && user.followers.some((follower) => {
             <p>Editando:</p>
             {editImage && (
               <img
-                src={`${uploads}/photos/${editImage}`}
+                src={editImage}
                 onContextMenu={(e) => e.preventDefault()}
                 onDragStart={(e) => e.preventDefault()}
                 alt={editTitle}
@@ -287,9 +317,10 @@ const isFollowing = user.followers && user.followers.some((follower) => {
                 placeholder="Insira o novo titulo"
                 onChange={(e) => setEditTitle(e.target.value)}
                 value={editTitle || ""}
+                disabled={loadingEditForm}
               />
               <input type="submit" value="Atualizar" />
-              <button className="cancel-btn" onClick={handleCancelEdit}>
+              <button className="cancel-btn" onClick={(e) => handleCancelEdit(e)}>
                 Cancelar edição
               </button>
             </form>
@@ -312,11 +343,15 @@ const isFollowing = user.followers && user.followers.some((follower) => {
       <div className="user-photos">
         <h2>Fotos publicadas:</h2>
         <div className="photos-container">
+          {console.log(photos)}
+          {photos.length == 0 && (
+            <p>Nenhuma foto para ver ainda</p>
+          )}
           {photos &&
             photos.map((photo) => (
               <div className="photo" key={photo.photoId}>
                 {photo.photoUrl && (
-                  <Link to={photo.photoId}>
+                  <Link to={`/photos/${photo.photoId}`}>
                     <img
                       className="img-t"
                       onContextMenu={(e) => e.preventDefault()}

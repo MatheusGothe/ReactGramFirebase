@@ -74,6 +74,7 @@ svg .comment_icon{
   height: auto;
   min-width: 80%;
   object-fit: cover;
+  border-radius: 7px;
 }
 
 

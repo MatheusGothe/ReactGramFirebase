@@ -12,6 +12,7 @@ import { GlobalContext, GlobalDispatchContext } from '../../state/context/Global
 import PhotoItem from '../../components/PhotoItem';
 import { getPhoto } from '../../slices/photoSlice';
 import { auth } from '../../lib/firebase';
+import Loading from '../../components/Loading';
 
 
 
@@ -21,9 +22,7 @@ const Photo = () => {
 
    const dispatch = useContext(GlobalDispatchContext)
 
-   const {photos,user,loading} = useContext(GlobalContext)
-
-   
+   const {photos,user,isLoading} = useContext(GlobalContext)
 
    const [commentText,setCommentText] = useState('')
    const [showComments,setShowComments] = useState(false)
@@ -39,11 +38,16 @@ const Photo = () => {
     }
     loadPhotos(id)
    },[])
-
-
-
    
-  console.log(user)
+
+   useEffect(() => {
+     console.log(isLoading)
+   }, [isLoading])
+   
+   if(isLoading){
+    return <Loading />
+   }
+   
 
   return (
     <div id="photo">

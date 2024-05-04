@@ -129,15 +129,16 @@ const deletePhoto = async (id, dispatch, photos) => {
 };
 
 // Update a photo
-const updatePhoto = async (data, id, token) => {
-  const config = requestConfig("PUT", data, token);
+const updatePhoto = async(data) => {
 
   try {
-    const res = await fetch(api + "/photos/" + id, config)
-      .then((res) => res.json())
-      .catch((err) => err);
 
-    return res;
+    const docRef = doc(db,'posts',data.id)
+    console.log(docRef)
+
+    await updateDoc(docRef,{ title: data.title})
+    
+  
   } catch (error) {
     console.log(error);
   }
