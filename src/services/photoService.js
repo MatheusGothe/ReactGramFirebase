@@ -11,6 +11,7 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
+  orderBy,
 } from "firebase/firestore";
 import { api, requestConfig } from "../utils/config";
 import { auth, db } from "../lib/firebase";
@@ -41,6 +42,7 @@ const publishPhoto = async (photo, dispatch, photos) => {
 
   // Crie o documento primeiro
   const userDocRef = doc(db, "users", user.uid);
+
   const document = {
     title,
     likes: [],
@@ -325,7 +327,6 @@ const removeCommentHome = async (photoId, CommentId, token) => {
     console.log(error);
   }
 };
-
 // Get all photos
 const getPhotos = async (user) => {
   try {
@@ -334,10 +335,12 @@ const getPhotos = async (user) => {
 
     const photoCollections = collection(db, "posts");
 
-    const photoSnapShot = await getDocs(photoCollections);
+    // Use orderBy to sort the photos by timestamp
+    const photoSnapShot = await getDocs(query(photoCollections, orderBy("timestamp", "desc")));
 
     const photos = await Promise.all(
       photoSnapShot.docs.map(async (doc) => {
+        
         const photoData = doc.data();
 
         const userData = await getDoc(photoData.user);
@@ -353,6 +356,7 @@ const getPhotos = async (user) => {
     console.log(error);
   }
 };
+
 
 // Get users who liked a photo
 const getPhotoLikes = async(photo) => {
