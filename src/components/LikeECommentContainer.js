@@ -67,7 +67,6 @@ const LikeECommentContainer = ({
   const handleComment = (e) => {
     e.preventDefault();
 
-    console.log(commentText.trim())
     if(commentText == '' || commentText.trim() == ''){
       dispatchAction(dispatch,"SET_ERROR","Comentário não pode estar vazio.")
       return
@@ -248,13 +247,13 @@ const LikeECommentContainer = ({
             )}
             <FaRegComment
               className="comment-icon"
-              onClick={() =>showOrHideComments(photo)}
+              onClick={() => showOrHideComments(photo)}
             />
           </>
         )}
       </div>
       {showComments && !loading && (
-        <div className={showComments ? styles.comments : ''}>
+        <div className={showComments ? styles.comments : ""}>
           {photo.comments && (
             <>
               <h3>Comentários {photo.comments.length}</h3>
@@ -268,7 +267,8 @@ const LikeECommentContainer = ({
                 <input type="submit" value="Enviar" disabled={loadingPequeno} />
               </form>
               {photo.comments.length === 0 && <p>Não há comentários</p>}
-              {photo.comments.map((comment,i) => (
+
+              {photo.comments.map((comment, i) => (
                 <div key={i} className={styles.comment}>
                   <div className={styles.author}>
                     {comment?.user.profileImage && (
@@ -285,12 +285,13 @@ const LikeECommentContainer = ({
                     )}
                   </div>
                   <p className={styles.comment_comment}>{comment.comment}</p>
-                  {user.id === photo.userId || comment.userId === user.id ? (
-                    <FaTrashAlt
-                      onClick={() => handleRemoveComment(comment,photo)}
-                      className={styles.trash}
-                    />
-                  ) : null}
+                  {user &&
+                    (user.id === photo.userId || comment.user.id === user.id ? (
+                      <FaTrashAlt
+                        onClick={() => handleRemoveComment(comment, photo)}
+                        className={styles.trash}
+                      />
+                    ) : null)}
                 </div>
               ))}
             </>
