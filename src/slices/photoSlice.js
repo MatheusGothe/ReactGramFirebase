@@ -77,6 +77,7 @@ export const deletePhoto = async (id, dispatch, photos) => {
       isLoading: true,
     },
   });
+  
 
   const data = await photoService.deletePhoto(id, dispatch, photos);
 

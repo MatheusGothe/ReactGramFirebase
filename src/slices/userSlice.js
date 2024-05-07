@@ -44,7 +44,6 @@ export const updateProfile = async (user, dispatch) => {
     username,
     uid: id,
     bio,
-    name,
     email,
     profileImage: file,
     password,
@@ -52,31 +51,31 @@ export const updateProfile = async (user, dispatch) => {
   } = user;
 
   try {
+    
     // Se a senha ou o email foram alterados, reautenticar o usuário
-
     if (password || auth.currentUser.email !== email) {
       const res = await reauthenticateUser(auth.currentUser.email, oldPassword);
-
       // Se houver um erro na reautenticação, retorne o erro
       if (res.error) {
+
         return { error: res.error, errorCode: res.code };
       }
     }
-
     // Preparar os dados para atualizar no Firestore
     const userDoc = doc(db, "users", id);
-    const updateData = { bio,username,name, email };
-
+    const updateData = { bio,username, email };
+    console.log(userDoc.id)
     // Se um arquivo foi fornecido, faça o upload e adicione o URL aos dados de atualização
-    if (file) {
-      const url = await uploadImage({ photo: file, title: name }, (progress) =>
+    if(file) {
+      
+      const url = await uploadImage({ photo: file, title: userDoc.id}, (progress) =>
         console.log(`Upload progress: ${progress}%`)
       );
       updateData.profileImage = url;
     }
-    console.log(updateData)
+     
     // Atualizar os dados do usuário no Firestore
-    await updateDoc(userDoc, updateData);
+     await updateDoc(userDoc, updateData);
 
     // Se uma nova senha foi fornecida, atualizar a senha do usuário
     if (password) {

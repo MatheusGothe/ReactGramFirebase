@@ -59,7 +59,7 @@ const publishPhoto = async (photo, dispatch, photos) => {
 
   try {
     // Depois faça o upload da imagem
-    const url = await uploadImage({ photo: image, photoId }, (progress) => {
+    const url = await uploadImage({ photo: image, title: docRef.id }, (progress) => {
       console.log(`upload ${progress}`);
     });
 
@@ -107,13 +107,14 @@ const getUserPhotos = async (id, token) => {
 
 // Delete a photo
 const deletePhoto = async (id, dispatch, photos) => {
+  console.log("photos",photos)
+  console.log("id",id)
+ // const userDocRef = doc(db, "users", user.uid);
   try {
     const q = query(collection(db, "posts"), where("photoId", "==", id));
     const querySnapShot = await getDocs(q);
-
     querySnapShot.forEach(async (doc) => {
       const data = doc.data();
-
       const storage = getStorage();
       const storageRef = ref(storage, `images/${data.photoId}`);
       await deleteObject(storageRef);
