@@ -11,10 +11,11 @@ import { useEffect } from "react";
 // react ga
 
 // Icons 
-import { auth } from "../../lib/firebase";
+import { auth, db } from "../../lib/firebase";
 import { GlobalContext, GlobalDispatchContext } from "../../state/context/GlobalContext";
 import { getPhotos } from "../../slices/photoSlice";
 import PhotoItem from '../../components/PhotoItem'
+import { collection, doc, getDoc, query, where } from "firebase/firestore";
 
 
 
@@ -36,7 +37,7 @@ const Home = ({storyData}) => {
   }
 
 
-
+  console.log(userAuth)
   useEffect(() => {
     
     getPhotos(userAuth,dispatch).then((photos)=> {
@@ -49,6 +50,27 @@ const Home = ({storyData}) => {
   const handleImageLoad = () => {
     setImagesLoaded(true);
   };
+
+    const setUser = async(userAuth) => {
+
+      const userCollection = collection(db, "users");
+
+    const userQuery = query(
+      userCollection,
+      where("email", "==", auth.currentUser.email)
+    );
+
+    dispatch({
+      type: "SET_USER",
+      payload: {
+        user: auth.currentUser.toJSON(),
+      },
+    });
+    }
+  if(!user){
+
+    setUser(userAuth)
+  }
   
 
 
