@@ -187,12 +187,7 @@ export const deslike = async (photo, dispatch) => {
 // Add Comment to a photo
 export const comment = async (commentData, dispatch) => {
   const { id } = commentData;
-  dispatch({
-    type: "SET_LOADING",
-    payload: {
-      isLoading: true,
-    },
-  });
+
   const data = await photoService.comment(commentData);
   const { user } = data;
   // Check for erros
@@ -208,12 +203,7 @@ export const comment = async (commentData, dispatch) => {
       user,
     },
   });
-  dispatch({
-    type: "SET_LOADING",
-    payload: {
-      isLoading: false,
-    },
-  });
+
   return data;
 };
 
@@ -251,13 +241,7 @@ export const getComments = async (photo, dispatch) => {
 
 // Remove Comment to a photo
 export const removeComment = async (commentData, dispatch) => {
-  dispatch({
-    type: "SET_LOADING",
-    payload: {
-      isLoading: true,
-    },
-  });
-
+ 
   const data = await photoService.removeComment(commentData);
 
   // Check for erros
@@ -266,12 +250,6 @@ export const removeComment = async (commentData, dispatch) => {
     return data.error;
   }
 
-  dispatch({
-    type: "SET_LOADING",
-    payload: {
-      isLoading: false,
-    },
-  });
 
   dispatch({
     type: "DELETE_COMMENT",

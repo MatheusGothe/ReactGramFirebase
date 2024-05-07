@@ -63,7 +63,7 @@ const LikeECommentContainer = ({
   const [commentText, setCommentText] = useState("");
   const [showHeart, setShowHeart] = useState(false);
   const [showLikes, setShowLikes] = useState(false);
-
+  const [loadingLocal,setLoadingLocal] = useState(false)
   const handleComment = (e) => {
     e.preventDefault();
 
@@ -77,10 +77,16 @@ const LikeECommentContainer = ({
       comment: commentText,
       id: photo.photoId,
     };
-
+    
+    setLoadingLocal(true)
     comment(commentData,dispatch)
     setCommentText("");
+    setLoadingLocal(false)
   };
+
+  useEffect(() => {
+    console.log(loadingLocal)
+  },[loadingLocal])
 
   const handleFollowContainer = async(like) => {
   
@@ -265,7 +271,7 @@ const LikeECommentContainer = ({
                   onChange={(e) => setCommentText(e.target.value)}
                   value={commentText || ""}
                 />
-                <input type="submit" value="Enviar" disabled={loadingPequeno} />
+                <input type="submit" value="Enviar" disabled={loadingLocal} />
               </form>
               {photo.comments.length === 0 && <p>Não há comentários</p>}
               {photo.comments.map((comment,i) => (
