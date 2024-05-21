@@ -6,145 +6,163 @@ import { uploads } from "../../utils/config";
 import { useContext, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-
 // Components
 import Message from "../../components/Message";
-import { GlobalContext, GlobalDispatchContext } from "../../state/context/GlobalContext";
+import {
+  GlobalContext,
+  GlobalDispatchContext,
+} from "../../state/context/GlobalContext";
 import { auth } from "../../lib/firebase";
 import { getUserDetails, profile, updateProfile } from "../../slices/userSlice";
 import { setErrorWithTimeout } from "../../utils/functions/resetError";
 import { dispatchAction } from "../../utils/functions/dispatchActions";
 // Animations
-import loadingAnimation from '../../utils/assets/loadingAnimation.json'
+import loadingAnimation from "../../utils/assets/loadingAnimation.json";
 import Lottie from "react-lottie-player";
 import Loading from "../../components/Loading";
 
 const EditProfile = () => {
+  const {
+    user,
+    isLoading: loading,
+    loading: loadingForm,
+    error,
+    message,
+  } = useContext(GlobalContext);
+  const dispatch = useContext(GlobalDispatchContext);
 
-  const {user,isLoading:loading,loading:loadingForm,error,message} = useContext(GlobalContext)
-  const dispatch = useContext(GlobalDispatchContext)
- 
   const [name, setName] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
   const [profileImage, setProfileImage] = useState("");
   const [bio, setBio] = useState(user.bio);
   const [previewImage, setPreviewImage] = useState("");
-  const [confirmNewPassword, setConfirmNewPassword] = useState("")
-  const [oldPassword, setOldPassword] = useState("")
-  const [isChanged,setIsChanged] = useState(false)
-  const [emailPassword,setEmailPassword] = useState(false)
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [isChanged, setIsChanged] = useState(false);
+  const [emailPassword, setEmailPassword] = useState(false);
 
   useEffect(() => {
-     profile(auth.currentUser.uid, dispatch)
-  }, []); 
-  
-    useEffect(() => {
-    if(user) {
+    profile(auth.currentUser.uid, dispatch);
+  }, []);
+
+  useEffect(() => {
+    if (user) {
       setName(user.username);
       setEmail(user.email);
       setBio(user.bio);
     }
   }, [user]);
 
-    useEffect(() => {
-      email == auth.currentUser.email ? setEmailPassword(false) : setEmailPassword(true)
-    },[email])
-  
+  useEffect(() => {
+    email == auth.currentUser.email
+      ? setEmailPassword(false)
+      : setEmailPassword(true);
+  }, [email]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user)
 
     const userData = {
       uid: user.id,
       email,
       name,
-      oldPassword
-    }
+      oldPassword,
+    };
 
-
-    if(name){
-      userData.name = name
-      userData.username = name
+    if (name) {
+      userData.name = name;
+      userData.username = name;
     }
     if (profileImage) {
       userData.profileImage = profileImage;
     }
-    if (email){
-      userData.email = email
+    if (email) {
+      userData.email = email;
     }
-    if(email == ''){
-      dispatchAction(dispatch,'SET_ERROR','E-mail não pode ser vazio')
-      return
+    if (email == "") {
+      dispatchAction(dispatch, "SET_ERROR", "E-mail não pode ser vazio");
+      return;
     }
-    if(bio) {
+    if (bio) {
       userData.bio = bio;
     }
-    
-    if(!name){
-      dispatchAction(dispatch,'SET_ERROR','Nome não pode ser vazio')
-      return
+
+    if (!name) {
+      dispatchAction(dispatch, "SET_ERROR", "Nome não pode ser vazio");
+      return;
     }
 
-    if(email !== auth.currentUser.email && !oldPassword){
-      console.log('é necessario a senha antiga para alterar a nova')
-      dispatchAction(dispatch,'SET_ERROR','É necessário a senha antiga para alterar o e-mail ou a senha.')
-      return
-    } 
+    if (email !== auth.currentUser.email && !oldPassword) {
+      console.log("é necessario a senha antiga para alterar a nova");
+      dispatchAction(
+        dispatch,
+        "SET_ERROR",
+        "É necessário a senha antiga para alterar o e-mail ou a senha."
+      );
+      return;
+    }
     if (password) {
       if (password !== confirmNewPassword) {
-      dispatchAction(dispatch,'SET_ERROR','As senhas não conferem')
-      return;
-     }
-    if(password.length < 6){
-      return
+        dispatchAction(dispatch, "SET_ERROR", "As senhas não conferem");
+        return;
+      }
+      if (password.length < 6) {
+        return;
+      }
+      userData.password = password;
+      userData.oldPassword = oldPassword;
     }
-    userData.password = password;
-    userData.oldPassword = oldPassword
-  }
     dispatch({
-      type:'SET_LOADING1',
+      type: "SET_LOADING1",
       payload: {
-        loading:true
-      }
-    })
-    const data =  await updateProfile(userData)
+        loading: true,
+      },
+    });
+    const data = await updateProfile(userData);
 
     dispatch({
-      type:'SET_LOADING1',
+      type: "SET_LOADING1",
       payload: {
-        loading:false
-      }
-    })
+        loading: false,
+      },
+    });
 
-    if(data?.error){
-      dispatchAction(dispatch,'SET_ERROR',data.error)
-      return
-    } 
-    dispatchAction(dispatch,'SET_MESSAGE','Usuário atualizado com sucesso.')
-
-};
-
-
+    if (data?.error) {
+      dispatchAction(dispatch, "SET_ERROR", data.error);
+      return;
+    }
+    dispatchAction(dispatch, "SET_MESSAGE", "Usuário atualizado com sucesso.");
+  };
 
   const handleFile = (e) => {
+    setIsChanged(true);
     const image = e.target.files[0];
+    console.log(image);
+    let validImageTypes = [
+      "image/png",
+      "image/avif",
+      "image/jpg",
+      "image/jpeg",
+    ];
+
+    if(!validImageTypes.includes(image.type)) {
+      console.log("image type", image.type);
+      dispatchAction(dispatch, "SET_ERROR", "Formato de arquivo inválido.");
+      return;
+    }
     setPreviewImage(image);
     setProfileImage(image);
   };
 
-  if(loading){
-    return (
-      <Loading />
-    )
+  if (loading) {
+    return <Loading />;
   }
 
   const handleChangle = (setter) => (e) => {
     setter(e.target.value);
     setIsChanged(true);
-  }
-  
+  };
 
   return (
     <div id="edit-profile">
@@ -177,18 +195,17 @@ const EditProfile = () => {
           value={email || ""}
         />
         <label>
-          {emailPassword &&
-        <label>
-          <span>Informe a senha para alterar o e-mail</span>
-          <input
-            type="password"
-            placeholder="Informe sua senha"
-            onChange={handleChangle(setOldPassword)}
-            value={oldPassword || ""}
-          />
-        </label> 
-    
-          }
+          {emailPassword && (
+            <label>
+              <span>Informe a senha para alterar o e-mail</span>
+              <input
+                type="password"
+                placeholder="Informe sua senha"
+                onChange={handleChangle(setOldPassword)}
+                value={oldPassword || ""}
+              />
+            </label>
+          )}
           <span>Imagem de Perfil</span>
           <input type="file" onChange={handleFile} />
         </label>
