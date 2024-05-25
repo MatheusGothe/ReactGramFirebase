@@ -16,7 +16,13 @@
 }
 .img-t{
   margin-bottom: 2px;
+/*  transition: transform 0.3s ease-in-out*/
 }
+
+/*.img-t:hover{
+  transform: scale(1.05);
+  animation: ease-in-out 3s;
+}*/
 .btn-foll{
   display: inline-block;
   padding: 10px 20px;

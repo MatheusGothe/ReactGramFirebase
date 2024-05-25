@@ -3,7 +3,7 @@ import "./EditProfile.css";
 import { uploads } from "../../utils/config";
 
 // Hooks
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // Components
@@ -41,7 +41,7 @@ const EditProfile = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [isChanged, setIsChanged] = useState(false);
   const [emailPassword, setEmailPassword] = useState(false);
-
+  const fileInput = useRef()
   useEffect(() => {
     profile(auth.currentUser.uid, dispatch);
   }, []);
@@ -120,7 +120,7 @@ const EditProfile = () => {
       },
     });
     const data = await updateProfile(userData);
-
+    fileInput.current.value = ''
     dispatch({
       type: "SET_LOADING1",
       payload: {
@@ -148,6 +148,7 @@ const EditProfile = () => {
 
     if(!validImageTypes.includes(image.type)) {
       console.log("image type", image.type);
+      fileInput.current.value = ''
       dispatchAction(dispatch, "SET_ERROR", "Formato de arquivo inválido.");
       return;
     }
@@ -207,7 +208,7 @@ const EditProfile = () => {
             </label>
           )}
           <span>Imagem de Perfil</span>
-          <input type="file" onChange={handleFile} />
+          <input type="file" accept='image/*'  onChange={handleFile} ref={fileInput} />
         </label>
         <label>
           <span>Bio</span>

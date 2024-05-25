@@ -141,9 +141,7 @@ const Profile = () => {
       dispatchAction(dispatch,'SET_ERROR','O título é obrigatório')
       return
     }
-    console.log(image)
     if(!image){
-
       dispatchAction(dispatch,'SET_ERROR','É necessário enviar uma imagem')
       return
     }
@@ -294,7 +292,7 @@ const isFollowing = user.followers && user.followers.some((follower) => {
               </label>
               <label>
                 <span>Imagem:</span>
-                <input type="file" onChange={handleFile} ref={fileInput} />
+                <input type="file" accept='image/*' onChange={handleFile} ref={fileInput} />
               </label>
               {!isLoading && <input type="submit" value="Postar" />}
               {isLoading && <input type="submit" disabled value="Aguarde..." />}
