@@ -15,12 +15,11 @@ import { useParams } from 'react-router-dom'
 import Loading from '../../components/Loading'
 
 //Icons
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
+
 import LoadingBall from '../../components/LoadingBall'
 import { auth } from '../../lib/firebase'
 import { followUser, followUserContainer, getUserDetails, getUserFollowers, getUserFollowing, unFollowUser, unFollowUserContainer } from '../../slices/userSlice'
-import { deletePhoto, publishPhoto, resetMessage, updatePhoto } from '../../slices/photoSlice'
+import { deletePhoto, publishPhoto, updatePhoto } from '../../slices/photoSlice'
 import { GlobalContext, GlobalDispatchContext } from '../../state/context/GlobalContext'
 import { dispatchAction } from '../../utils/functions/dispatchActions'
 import ShowFollows from '../../components/ShowFollows'
@@ -97,12 +96,12 @@ const Profile = () => {
       title: editTitle
     }
 
-    const res = updatePhoto(data)
+    const res = updatePhoto(data,dispatch)
+
 
     toast.success('Foto atualizada')
     
 
-    console.log(data)
 
 
     setLoadingEditForm(false)

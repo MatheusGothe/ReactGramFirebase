@@ -98,17 +98,24 @@ export const deletePhoto = async (id, dispatch, photos) => {
 };
 
 // Update a photo
-export const updatePhoto = async(data) => {
+export const updatePhoto = async(data,dispatch) => {
  
 
   const res = await photoService.updatePhoto(data)
+
+  dispatch({
+    type: 'UPDATE_PHOTO',
+    payload: {
+      data
+    }
+  }) 
+ 
   
 
 }
 // Get photo by id
 
 export const getPhoto = async (id, dispatch) => {
-  console.log('entrou')
   dispatch({
     type: "SET_LOADING",
     payload: {

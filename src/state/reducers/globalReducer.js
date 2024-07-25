@@ -302,6 +302,26 @@ export const globalReducer = (state, action) => {
 
       return {...state}
     }
+
+    case "UPDATE_PHOTO" : {
+      
+
+      const updatedPhotos = state.photos.map((photo)=> {
+        if(photo.photoId === action.payload.data.id){
+          return {
+            ...photo,
+            title: action.payload.data.title
+          }
+        }
+        return photo
+
+      })
+
+
+      return { ...state, photos: updatedPhotos };
+
+
+    }
     default: {
       console.log(action)
       throw Error(`unknown action: ${action.type} `);
