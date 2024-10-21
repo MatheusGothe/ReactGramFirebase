@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import authService from "../services/authService";
 import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
@@ -147,25 +146,6 @@ export const resetPassword = async(email) => {
   }
 }
 
-// Sign in a user
-export const sendVerificattionEmail = createAsyncThunk(
-  "auth/sendEmail",
-  async (email, thunkAPI) => {
-    console.log(email);
-    const [res, error] = await authService.sendVerificattionEmail(email);
-    if (error) {
-      console.log("error");
-      console.log(error);
-    }
-    // check for erros
-    if (res.errors) {
-      console.log(res);
-      return thunkAPI.rejectWithValue(res.errors[0]);
-    }
-
-    return res;
-  }
-);
 
 export const authSlice = createSlice({
   name: "auth",
