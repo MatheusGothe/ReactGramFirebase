@@ -15,11 +15,18 @@
     border-bottom: 1px dotted #f1f0f075;
     width: 100%;
   }
-  .comment-icon{
+  .comment-icon {
     cursor: pointer;
-    margin-left: 3%;    
+    margin-left: 3%;
     font-size: 1.5em;
-  }
+    transition: transform 0.3s, color 0.3s;
+}
+
+.comment-icon:hover {
+  color: #9B59B6; /* Roxo Intenso */
+  transform: scale(1.1);
+}
+
   svg .comment_icon{
     border: 5px solid blue;
   }

@@ -46,19 +46,50 @@
 }
 
 
-
-
-.users-search{
-  position: absolute;
-  width: 40%;
+.users-search {
+  position: fixed;
+  width: 30%;
   height: 40%;
   background-color: white;
-  left: 30%;
-  top: 25%;
+  left: 35%;
+  top: 8%;
   z-index: 20;
   border-radius: 8px;
-  overflow-y: auto ;
+  overflow-y: auto; /* Habilita a rolagem vertical */
 }
+
+/* Estilos para a scrollbar no Chrome/Safari */
+.users-search::-webkit-scrollbar {
+  width: 8px; /* Largura da scrollbar (mais fina) */
+}
+
+.users-search::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Cor de fundo da scrollbar */
+  border-radius: 8px; /* Bordas arredondadas do track */
+}
+
+.users-search::-webkit-scrollbar-thumb {
+  background: #888; /* Cor padrão do thumb */
+  border-radius: 8px; /* Bordas arredondadas do thumb */
+  border: 2px solid #f1f1f1; /* Cria um espaço entre o thumb e o track */
+}
+
+.users-search::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Cor do thumb ao passar o mouse */
+}
+
+.users-search::-webkit-scrollbar-thumb:active {
+  background: #333; /* Cor do thumb quando é clicado */
+}
+
+/* Estilo para a scrollbar no Firefox */
+.users-search {
+  scrollbar-width: thin; /* Tornar a scrollbar mais fina */
+  scrollbar-color: #888 #f1f1f1; /* Cor do thumb e do track */
+}
+
+
+
 .div-search{
   display: flex;
   align-items: center;

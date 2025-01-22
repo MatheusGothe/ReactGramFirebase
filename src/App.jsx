@@ -63,6 +63,9 @@ function App() {
      <BrowserRouter>
      <Navbar showNavbar={showNavbar} storieValue={storieValue} />
        <div className="container">
+       {/* <div className='notification' >
+          Notificacoes
+        </div> */}
         <Routes>
           <Route path='/' element={currentUser ? <Home storyData={handleStorieValue} /> : <Navigate to='/login' />} />
           <Route path='/login' element={!currentUser ? <Login /> : <Navigate to='/' /> } />
@@ -75,6 +78,7 @@ function App() {
           <Route path='/reset-password' element={<ResetPassword />} />
           <Route path='/*' element={<Navigate to='/' />} />
         </Routes>
+
        </div>
         <Footer />
      </BrowserRouter>

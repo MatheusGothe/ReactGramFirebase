@@ -16,8 +16,6 @@ import {Animated} from 'react-animated-css'
 import {auth} from '../lib/firebase'
 
 
-
-
 // Hooks
 import { useNavigate } from "react-router-dom";
 
@@ -43,6 +41,7 @@ const Navbar = ({showNavbar}) => {
 
   const searchFormRef = useRef();
   const usersSearchRef = useRef();
+  const inputRef = useRef()
 
   const [query,setQuery] = useState('')
   const [users,setUsers] = useState('')
@@ -52,10 +51,21 @@ const Navbar = ({showNavbar}) => {
   useEffect(() => {
     getSearchData()
   },[query])
+
+  useEffect(() => {
+    if (usersSearchRef.current && inputRef.current) {
+        const inputWidth = inputRef.current.offsetWidth; // Largura atual do input
+        const fontSize = parseFloat(getComputedStyle(inputRef.current).fontSize); // Tamanho da fonte em pixels
+        const additionalWidth = 2.0 * fontSize; // Conversão de 2.5em para pixels
+
+        usersSearchRef.current.style.width = `${inputWidth + additionalWidth}px`; // Define a nova largura
+        console.log("do input", inputWidth); // Log da largura do input
+        console.log("dos registros", usersSearchRef.current.offsetWidth); // Log da largura da div
+    }
+}, [query]);
+
   
   const userAuth = auth.currentUser
-
-
 
    const handleStorieValue = () => {
     
@@ -109,6 +119,7 @@ const Navbar = ({showNavbar}) => {
           onChange={(e) => setQuery(e.target.value)}
           value={query}
           disabled={!auth}
+          ref={inputRef}
           />
       </form>
           )}
