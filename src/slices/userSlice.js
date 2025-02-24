@@ -63,8 +63,11 @@ export const updateProfile = async (user, dispatch) => {
     }
     // Preparar os dados para atualizar no Firestore
     const userDoc = doc(db, "users", id);
-    const updateData = { bio,username, email };
-    console.log(userDoc.id)
+    const updateData = {
+      bio: bio || '',           
+      username: username || '', 
+      email: email || '',       
+    };
     // Se um arquivo foi fornecido, faça o upload e adicione o URL aos dados de atualização
     if(file) {
       
