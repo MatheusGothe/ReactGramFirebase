@@ -9,7 +9,6 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 import Stories from 'react-insta-stories'
 
-import { uploads } from '../utils/config'
 import { useWindowDimensions } from '../hooks/useWindowDimensions'
 
 const StoriesContainer = ({stories,getStorieValue}) => {
@@ -74,12 +73,10 @@ const StoriesContainer = ({stories,getStorieValue}) => {
     }
     return {
       ...story,
-      url: `${uploads}/stories/${story.storyImage}`,
       duration: 3000,
       header: {
         heading: story.userName,
         subheading: `Postado  ${timeDifferenceString}`,
-        profileImage: `${uploads}/users/${story.userImage}`,
       },
     };
   });
@@ -158,7 +155,6 @@ const StoriesContainer = ({stories,getStorieValue}) => {
               <div className={styles.storieImgWrapper}>
                   <img
                       className={styles.storieImg}
-                      src={`${uploads}/users/${storie.userImage}`}
                   />
               </div>
           </div>

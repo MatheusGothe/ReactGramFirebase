@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './PostStorie.module.css';
-import Message from '../../components/Message';
-import { uploads } from '../../utils/config';
-import {FaTrash, FaTrashAlt} from 'react-icons/fa'
+
 
  const Storie = () => {
 

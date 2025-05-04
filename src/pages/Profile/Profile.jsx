@@ -1,6 +1,5 @@
 import './Profile.css'
 
-import { uploads } from '../../utils/config'
 
 // components
 import Message from '../../components/Message'

@@ -2,7 +2,6 @@
 //const localIp = getCurrentIp()
 const localIp = "192.168.18.10"
 export const api = `http://${localIp}:5000/api`; 
-export const uploads = `http://${localIp}:5000/uploads`;
 export const requestConfig = (method, data, token = null, image = null) => {
   let config;
 

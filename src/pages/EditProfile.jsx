@@ -1,6 +1,5 @@
 import "./EditProfile.css";
 
-import { uploads } from "../../utils/config";
 
 // Hooks
 import { useContext, useEffect, useState } from "react";

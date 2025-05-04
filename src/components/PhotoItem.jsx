@@ -1,6 +1,5 @@
 //import "./PhotoItem.css";
 import styles from "./PhotoItem.module.css";
-import { uploads } from "../utils/config";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -81,7 +80,6 @@ const PhotoItem = ({ user: currentUser, photo, onImageLoad }) => {
               <>
                 <img
                   className={styles.photo_pequena}
-                  src={`${uploads}/users/${photo.user.profileImage}`}
                   alt={"user.name"}
                   onContextMenu={(e) => e.preventDefault()}
                   onDragStart={(e) => e.preventDefault()}

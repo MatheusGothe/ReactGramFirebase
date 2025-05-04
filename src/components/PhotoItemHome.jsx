@@ -1,4 +1,3 @@
-import { api, uploads } from '../utils/config';
 import { Link, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { like, deslike,removeComment, comment } from '../slices/photoSlice';
@@ -66,7 +65,6 @@ const PhotoItemHome = ({photo,handleDoubleClick,showHeart,clicked}) => {
         <div className={styles.author_info}>
           <img
             id={styles.photo_pequena}
-            src={`${uploads}/users/${photo.profileImage}`}
             alt={user.name}
             onContextMenu={(e) => e.preventDefault()}
             onDragStart={(e) => e.preventDefault()}
@@ -79,7 +77,6 @@ const PhotoItemHome = ({photo,handleDoubleClick,showHeart,clicked}) => {
         <div className={styles.author_info}>
           <img
             className={styles.photo_pequena}
-            src={`${uploads}/users/${user.profileImage}`}
             alt={user.name}
             onContextMenu={(e) => e.preventDefault()}
             onDragStart={(e) => e.preventDefault()}
@@ -94,7 +91,6 @@ const PhotoItemHome = ({photo,handleDoubleClick,showHeart,clicked}) => {
           className={styles.img}
           id="imgPhoto"
           onDoubleClick={() => handleDoubleClick(photo)}
-          src={`${uploads}/photos/${photo.image}`}
           alt={photo.title}
           onContextMenu={(e) => e.preventDefault()}
           onDragStart={(e) => e.preventDefault()}

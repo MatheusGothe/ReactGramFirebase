@@ -23,7 +23,6 @@ import {BsComment,BsCommentFill} from 'react-icons/bs'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
-import { uploads } from '../utils/config';
 import Loading from './Loading';
 import { getPhotoLikes } from '../slices/photoSlice';
 
@@ -194,7 +193,6 @@ const handleUnFollow = (like) => {
                         <div className={styles.marco0}>
                           <img
                             className={styles.like_profile_image}
-                            src={`${uploads}/users/${like.profileImage}`}
                             alt={like.name}
                           />
                           <Link to={`/users/${like._id}`}>
@@ -256,7 +254,6 @@ const handleUnFollow = (like) => {
                     {comment?.userImage && (
                       <img
                         className={styles.photo_comment}
-                        src={`${uploads}/users/${comment.userImage}`}
                         alt={comment.userName}
                       />
                     )}
