@@ -1,89 +1,155 @@
-import {BrowserRouter, Routes, Route, Navigate,useLocation}  from 'react-router-dom'
-import ReactGA4 from 'react-ga4';
-
-// CSS
-import './App.css'
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+  Outlet,
+  useLocation
+} from 'react-router-dom';
+import { useState, useEffect, useContext } from 'react';
+import './App.css';
 
 // Pages
-import Home from './pages/Home/Home'
+import Home from './pages/Home/Home';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import Profile from './pages/Profile/Profile';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
-
-// Components
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-
-// Hooks
 import EditProfile from './pages/EditProfile/EditProfile';
 import Photo from './pages/Photo/Photo';
 import Search from './pages/Search/Search';
 import Storie from './pages/PostStorie/Storie';
-import { useState,useEffect, useContext } from 'react';
+
+// Components
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+
 // Firebase
-import {auth} from './lib/firebase'
+import { auth } from './lib/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { GlobalContext } from './state/context/GlobalContext';
 
+function Layout({ storieValue }) {
+  return (
+    <div className="App">
+      <Navbar storieValue={storieValue} />
+      <div className="container">
+        <Outlet />
+      </div>
+      <Footer />
+    </div>
+  );
+}
 
+function ProtectedRoute({ children, currentUser }) {
+  return currentUser ? children : <Navigate to="/login" />;
+}
 
+function PublicOnlyRoute({ children, currentUser }) {
+  return !currentUser ? children : <Navigate to="/" />;
+}
 
 function App() {
-
-  const {user} = useContext(GlobalContext)
-  
-  const [storieValue, setStorieValue] = useState(false);
-  const [showNavbar, setShowNavbar] = useState(true);
+  const { user } = useContext(GlobalContext);
   const [loading, setLoading] = useState(true);
-  const [currentUser, setCurrentUser] = useState(auth);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [storieValue, setStorieValue] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setCurrentUser(currentUser);
       setLoading(false);
     });
-
-    // Limpeza na desmontagem
     return () => unsubscribe();
   }, []);
 
-  if (loading) {
-    return <p>Carregando...</p>;
-  }
-
-
-
   const handleStorieValue = (r) => {
-    setStorieValue(r)
-  }
+    setStorieValue(r);
+  };
 
-  return (
-    <div className="App">
-     <BrowserRouter>
-     <Navbar showNavbar={showNavbar} storieValue={storieValue} />
-       <div className="container">
-       {/* <div className='notification' >
-          Notificacoes
-        </div> */}
-        <Routes>
-          <Route path='/' element={currentUser ? <Home storyData={handleStorieValue} /> : <Navigate to='/login' />} />
-          <Route path='/login' element={!currentUser ? <Login /> : <Navigate to='/' /> } />
-          <Route path='/register' element={!currentUser ? <Register /> : <Navigate to='/' /> } />
-          <Route path='/postStorie' element={currentUser ? <Storie /> : <Navigate to='/' /> } />
-          <Route path='/profile' element={currentUser ? <EditProfile /> : <Navigate to='/login' />} />
-          <Route path='/users/:id' element={currentUser ? <Profile /> : <Navigate to='/login' />} />
-          <Route path='/photos/:id' element={currentUser ? <Photo /> : <Navigate to='/login' />} />
-          <Route path='/search' element={currentUser ? <Search /> : <Navigate to='/login' />} />
-          <Route path='/reset-password' element={<ResetPassword />} />
-          <Route path='/*' element={<Navigate to='/' />} />
-        </Routes>
+  if (loading) return <p>Carregando...</p>;
 
-       </div>
-        <Footer />
-     </BrowserRouter>
-    </div>
-  );
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Layout storieValue={storieValue} />,
+      children: [
+        {
+          index: true,
+          element: (
+            <ProtectedRoute currentUser={currentUser}>
+              <Home storyData={handleStorieValue} />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'login',
+          element: (
+            <PublicOnlyRoute currentUser={currentUser}>
+              <Login />
+            </PublicOnlyRoute>
+          ),
+        },
+        {
+          path: 'register',
+          element: (
+            <PublicOnlyRoute currentUser={currentUser}>
+              <Register />
+            </PublicOnlyRoute>
+          ),
+        },
+        {
+          path: 'postStorie',
+          element: (
+            <ProtectedRoute currentUser={currentUser}>
+              <Storie />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'profile',
+          element: (
+            <ProtectedRoute currentUser={currentUser}>
+              <EditProfile />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'users/:id',
+          element: (
+            <ProtectedRoute currentUser={currentUser}>
+              <Profile />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'photos/:id',
+          element: (
+            <ProtectedRoute currentUser={currentUser}>
+              <Photo />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'search',
+          element: (
+            <ProtectedRoute currentUser={currentUser}>
+              <Search />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'reset-password',
+          element: <ResetPassword />,
+        },
+        {
+          path: '*',
+          element: <Navigate to="/" />,
+        },
+      ],
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;
