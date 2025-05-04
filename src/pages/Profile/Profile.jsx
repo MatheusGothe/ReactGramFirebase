@@ -128,7 +128,6 @@ const Profile = () => {
   
    const handleCancelEdit = (e) => {
     e.preventDefault()
-    console.log(e)
       hideOrShowForms()
  
    }
@@ -340,7 +339,6 @@ const isFollowing = user.followers && user.followers.some((follower) => {
       <div className="user-photos">
         <h2>Fotos publicadas:</h2>
         <div className="photos-container">
-          {console.log(photos)}
           {photos.length == 0 && (
             <p>Nenhuma foto para ver ainda</p>
           )}

@@ -59,8 +59,6 @@ const Navbar = ({showNavbar}) => {
         const additionalWidth = 2.0 * fontSize; // Conversão de 2.5em para pixels
 
         usersSearchRef.current.style.width = `${inputWidth + additionalWidth}px`; // Define a nova largura
-        console.log("do input", inputWidth); // Log da largura do input
-        console.log("dos registros", usersSearchRef.current.offsetWidth); // Log da largura da div
     }
 }, [query]);
 

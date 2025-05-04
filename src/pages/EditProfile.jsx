@@ -49,7 +49,6 @@ const EditProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user)
 
     const userData = {
       uid: user.id,
@@ -73,7 +72,6 @@ const EditProfile = () => {
     }
 
     if(email !== auth.currentUser.email && !oldPassword){
-      console.log('é necessario a senha antiga para alterar a nova')
       dispatchAction(dispatch,'SET_ERROR','É necessário a senha antiga para alterar o e-mail ou a senha.')
       return
     } 
@@ -94,7 +92,6 @@ const EditProfile = () => {
         loading:true
       }
     })
-    console.log(userData)
     const data =  await updateProfile(userData)
 
     dispatch({
@@ -134,7 +131,6 @@ const EditProfile = () => {
 
   return (
     <div id="edit-profile">
-      {console.log(loadingForm)}
       <h2>Edite seus dados</h2>
       <p className="subtitle">
         Adicione uma imagem de perfil e conte mais sobre você.

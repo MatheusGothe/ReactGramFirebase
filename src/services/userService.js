@@ -1,6 +1,6 @@
 import { arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore'
 import { auth, db, storage } from '../lib/firebase'
-import {api, requestConfig} from '../utils/config'
+import { requestConfig} from '../utils/config'
 
 // Get user details
 const profile = async(id,dispatch) => {
@@ -12,7 +12,6 @@ const profile = async(id,dispatch) => {
     const userDocSnap = await getDoc(userCollection)
         
     if(userDocSnap.exists()){
-    console.log('entrou')
      dispatch({
        type:'SET_USER',
        payload: {
@@ -30,25 +29,6 @@ const profile = async(id,dispatch) => {
         console.log(error)
         return error
     }
-}
-
-// Update user and details
-const updateProfile = async(data, token) => {
-
-    const config = requestConfig("PUT",data, token, true)
-
-    try {
-
-        const res = await fetch(api + "/users/",config)
-            .then((res) => res.json())
-            .catch((err) => err);
-  
-      return res;
-
-    } catch (error) {
-        console.log(error)
-    }
-
 }
 
 // Get user details
@@ -89,20 +69,7 @@ const getUserDetails = async(id,dispatch) => {
     }
 }
 
-// Reset Password
-const resetPassword = async(email) => {
-    const config = requestConfig("PUT", { email: email })
 
-    try {
-        const res = await fetch(api + '/users/reset-password', config)
-                .then((res) => res.json())
-                .catch((err) => err)
-
-        return res    
-    }catch(error) {
-        console.log(error)
-    }
-}
 // Follow a user 
 const followUser = async(data) => {
 
@@ -230,7 +197,6 @@ const getUserFollowers = async (data) => {
 // Get user Followers
 const getUserFollowing = async (data) => {
 
-    console.log(data)
     const userRef = doc(db,'users',data.id)
     const userSnap = await getDoc(userRef)
 
@@ -276,13 +242,9 @@ export const searchUsers = async(input) => {
 }
   
 
-
-
 const userService = {
     profile,
-    updateProfile,
     getUserDetails,
-    resetPassword,
     followUser,
     unFollowUser,
     getUserFollowers,

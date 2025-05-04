@@ -1,6 +1,5 @@
 // dispatchActions.js
 export const dispatchAction = (dispatch, type, payload) => {
-    console.log(payload)
     dispatch({
       type: type,
       payload: payload

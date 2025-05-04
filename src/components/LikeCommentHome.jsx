@@ -109,11 +109,9 @@ const handleDeslike = () => {
 const showOrHideComments = () => {
   if(showComments === true){
     setShowComments(false)
-    console.log('fechou')
 
   } else{
     setShowComments(true)
-    console.log('abriu')
 
 
   }
@@ -238,7 +236,7 @@ const handleUnFollow = (like) => {
         )}
       </div>
       {showComments && (
-        <div className={showComments ? styles.comments : console.log("Falso")}>
+        <div className={showComments ? styles.comments : ''}>
           {photo.comments && (
             <>
               <h3>Comentários {photo.comments.length}</h3>

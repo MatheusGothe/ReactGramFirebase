@@ -59,10 +59,8 @@ const Login = () => {
     const res = await login(data,dispatch)
 
     if(res?.error){
-      console.log(res.error)
       let errorMessage = res.error.split('(')[1].split(')')[0].split('/')[1];
       errorMessage = errorMessage.charAt(0).toUpperCase() + errorMessage.slice(1) + ".";
-      console.log(errorMessage)
       dispatchAction(dispatch,'SET_ERROR',errorMessage)
   }
   

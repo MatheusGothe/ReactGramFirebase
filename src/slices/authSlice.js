@@ -94,7 +94,6 @@ export const register = async(user,dispatch) => {
 
 // LogOut a user
 export const logout = async () => {
-  console.log("logout");
   await signOut(auth);
 };
 
@@ -130,18 +129,14 @@ export const login = async (user, dispatch) => {
 };
 
 export const resetPassword = async(email) => {
-  console.log(email)
   try {
 
     const res = await sendPasswordResetEmail(auth,email)
-    console.log('Email enviado com sucesso')
     
     return null
   } catch (error) {
-    console.log(error.message)
     var translateMessage = await translate(error.message,{from:'en',to:'pt'})
 
-    console.log(translateMessage)
     return translateMessage
   }
 }
@@ -164,10 +159,8 @@ export const authSlice = createSlice({
     },
     resetSuccess: (state) => {
       state.success = false;
-      console.log("entrou");
     },
     setMessage: (state, action) => {
-      console.log("caiu");
       state.error = action.payload;
     },
   },
@@ -202,14 +195,12 @@ export const authSlice = createSlice({
         state.error = false;
       })
       .addCase(login.fulfilled, (state, action) => {
-        console.log(action);
         state.loading = false;
         state.success = true;
         state.error = null;
         state.message = false;
       })
       .addCase(login.rejected, (state, action) => {
-        console.log(action);
         state.loading = false;
         state.user = null;
         state.error = true;

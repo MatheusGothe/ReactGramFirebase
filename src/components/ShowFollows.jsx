@@ -105,7 +105,6 @@ const ShowFollows = ({
            {showFollowing && (
             <div className="container_followers">
               <div className="cont">
-                {console.log(user)}
                 <div
                   className="follow_title"
                   style={{ color: "black", fontWeight: "500" }}

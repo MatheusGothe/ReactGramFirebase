@@ -25,7 +25,6 @@ export const publishPhoto = async (photo, dispatch, photos) => {
   
   dispatchAction(dispatch, "SET_LOADING", { isLoading: false });
   if(res.error) {
-    console.log('caiu')
     return res.error.message;
   }
 };
@@ -205,7 +204,6 @@ export const comment = async (commentData, dispatch) => {
   const { user } = data;
   // Check for erros
   if (data?.error) {
-    console.log("error");
     return data.error;
   }
   dispatch({
@@ -270,7 +268,6 @@ export const removeComment = async (commentData, dispatch) => {
 
   // Check for erros
   if (data?.error) {
-    console.log(data);
     return data.error;
   }
 
@@ -306,7 +303,6 @@ export const removeCommentHome = createAsyncThunk(
 
     // Check for erros
     if (data[0].errors) {
-      console.log("erro");
       return thunkAPI.rejectWithValue(data[0].errors);
     }
 
@@ -504,9 +500,7 @@ export const photoSlice = createSlice({
 
         // Atualiza o estado da foto individual
         if (state.photo._id === photo._id) {
-          console.log("caio primeiro if");
-          console.log(photo);
-          console.log(userId);
+
           const newLikes = state.photo.likes.filter((id) => id !== userId);
           state.photo.likes = newLikes;
         }
@@ -534,10 +528,8 @@ export const photoSlice = createSlice({
         state.loadingPequeno = false;
 
         if (state.photo.comments) {
-          console.log("if");
           state.photo.comments.push(action.payload.comment);
         } else {
-          console.log("else");
           state.photo.comments = [action.payload.comment];
         }
 

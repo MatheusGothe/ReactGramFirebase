@@ -94,7 +94,6 @@ const EditProfile = () => {
     }
 
     if (email !== auth.currentUser.email && !oldPassword) {
-      console.log("é necessario a senha antiga para alterar a nova");
       dispatchAction(
         dispatch,
         "SET_ERROR",
@@ -138,7 +137,6 @@ const EditProfile = () => {
   const handleFile = (e) => {
     setIsChanged(true);
     const image = e.target.files[0];
-    console.log(image);
     let validImageTypes = [
       "image/png",
       "image/avif",
@@ -147,7 +145,6 @@ const EditProfile = () => {
     ];
 
     if(!validImageTypes.includes(image.type)) {
-      console.log("image type", image.type);
       fileInput.current.value = ''
       dispatchAction(dispatch, "SET_ERROR", "Formato de arquivo inválido.");
       return;

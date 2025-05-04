@@ -40,9 +40,6 @@ const Photo = () => {
    },[])
    
 
-   useEffect(() => {
-     console.log(isLoading)
-   }, [isLoading])
    
    if(isLoading){
     return <Loading />

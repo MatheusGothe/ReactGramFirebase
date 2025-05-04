@@ -128,7 +128,6 @@ export const getUserDetails = async (id, dispatch) => {
   });
 
   if (data?.error) {
-    console.log("erro");
   }
 
   dispatch({
@@ -209,12 +208,10 @@ export const followUserContainer = async (data,dispatch) => {
         userAuth
       },
     });
-    console.log(user)
 
 
     // Verificar se houve erro na resposta
     if (res?.errors) {
-      console.log(res);
       return res;
     }
   } catch (error) {
@@ -224,13 +221,11 @@ export const followUserContainer = async (data,dispatch) => {
 
 export const unFollowUserContainer = async (data, dispatch) => {
   
-    console.log(data)
     try {
       const res = await userService.unFollowUserContainer(data);
 
       // Verificar se houve erro na resposta
       if (res?.errors) {
-        console.log(res)
         return res
       }
       dispatch({

@@ -59,9 +59,7 @@ const Register = () => {
 
     const res = await register(user,dispatch)
 
-    console.log(res)
     if(res.error){
-      console.log('errorrrrrrrrrrrrrr')
       dispatchAction(dispatch,'SET_ERROR',res.error)
       return
     }

@@ -75,7 +75,6 @@ export const globalReducer = (state, action) => {
         }
       })
       
-      console.log(updatedPosts)
       return {...state,photos: updatedPosts}
     }
     
@@ -84,7 +83,6 @@ export const globalReducer = (state, action) => {
       const updatedPhotos = state.photos.map((photo) => {
         if(photo.photoId === action.payload.photoId){
           const updatedLikes = photo.likes.filter((userId) => {
-            console.log(userId)
            return userId !== action.payload.userId
           })
             
@@ -152,12 +150,10 @@ export const globalReducer = (state, action) => {
     }
     case "DELETE_COMMENT": {
       // Encontre a foto que está sendo atualizada
-      console.log(action.payload)
       const updatedPhotos = state.photos.map((photo) => {
         if (photo.photoId === action.payload.id) {
          
           const updatedComments = photo.comments.filter((comment) => {
-            console.log(comment.commentId,' !== ',action.payload.commentId)
             return comment.commentId !== action.payload.commentId;
           });
           // Retorne a foto com os comentários atualizados
@@ -187,8 +183,6 @@ export const globalReducer = (state, action) => {
       };
     
       // Atualize a lista de usuários no estado
-      console.log(updatedUser)
-      console.log(updatedUserAuth)
       return {
         ...state,
         user:updatedUser,
@@ -218,7 +212,6 @@ export const globalReducer = (state, action) => {
       };
     }
     case "SET_FOLLOWERS_INFO": {
-      console.log(action.payload)
       if(!state.user.followersInfo) {
         state.user.followersInfo = [];
         state.user.followersInfo = state.user.followersInfo.concat(action.payload.followers)
@@ -230,7 +223,6 @@ export const globalReducer = (state, action) => {
       return {...state,}
     }
     case "SET_FOLLOWING_INFO": {
-      console.log(action.payload.following)
 
       state.user.followingInfo = []
       state.user.followingInfo = state.user.followingInfo.concat(action.payload.following)
@@ -248,11 +240,9 @@ export const globalReducer = (state, action) => {
       }
     }
     case "SET_FOLLOW_CONTAINER": {
-      console.log(action.payload)
 
       if(state.user.id === state.currentUser.id){
         // quer dizer que o o currentUser esta é igual ao user que esta na tela
-        console.log('iguaisss')
         state.user.following.push(action.payload.userAuth.id)
         
       }
@@ -269,11 +259,9 @@ export const globalReducer = (state, action) => {
     }
     
     case "SET_UNFOLLOW_CONTAINER": {
-      console.log(action.payload)
 
       if(state.user.id === state.currentUser.id){
         state.user.following = state.currentUser.following.filter((id) => {
-         console.log(id,'!==',action.payload.user.id)
           return id !== action.payload.user.id
         })
       }
@@ -323,7 +311,6 @@ export const globalReducer = (state, action) => {
 
     }
     default: {
-      console.log(action)
       throw Error(`unknown action: ${action.type} `);
     }
   }

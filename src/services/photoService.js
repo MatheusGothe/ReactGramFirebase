@@ -60,7 +60,6 @@ const publishPhoto = async (photo, dispatch, photos) => {
   try {
     // Depois faça o upload da imagem
     const url = await uploadImage({ photo: image, title: docRef.id }, (progress) => {
-      console.log(`upload ${progress}`);
     });
 
     // Obtenha as dimensões da imagem
@@ -107,8 +106,7 @@ const getUserPhotos = async (id, token) => {
 
 // Delete a photo
 const deletePhoto = async (id, dispatch, photos) => {
-  console.log("photos",photos)
-  console.log("id",id)
+
  // const userDocRef = doc(db, "users", user.uid);
   try {
     const q = query(collection(db, "posts"), where("photoId", "==", id));
@@ -137,7 +135,6 @@ const updatePhoto = async(data) => {
   try {
 
     const docRef = doc(db,'posts',data.id)
-    console.log(docRef)
 
     await updateDoc(docRef,{ title: data.title})
     
@@ -158,7 +155,6 @@ const getPhoto = async (id) => {
     const photoSnapShot = await getDoc(photoRef);
 
     if (!photoSnapShot.exists()) {
-      console.log("No such document");
       return;
     }
 
@@ -181,9 +177,7 @@ const getPhoto = async (id) => {
 // Like a photo
 const like = async (photo, dispatch) => {
   const id = photo.photoId;
-  console.log(auth.currentUser.toJSON());
   const currentUserId = auth.currentUser.uid;
-  console.log(id);
   try {
     const postRef = doc(db, "posts", id);
 
@@ -319,7 +313,6 @@ const removeCommentHome = async (photoId, CommentId, token) => {
       .then((res) => res.json())
       .catch((err) => err);
 
-    console.log(res);
     /*  if(res.errors){
             return res.errors[0]
         }   */
