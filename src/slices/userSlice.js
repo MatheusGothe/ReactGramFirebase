@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import userService from "../services/userService";
 import { auth, db } from "../lib/firebase";
+import imageCompression from 'browser-image-compression';
+
 import {
   collection,
   doc,
@@ -70,8 +72,14 @@ export const updateProfile = async (user, dispatch) => {
     };
     // Se um arquivo foi fornecido, faça o upload e adicione o URL aos dados de atualização
     if(file) {
-      
-      const url = await uploadImage({ photo: file, title: userDoc.id}, (progress) =>
+
+      const compressedFile = await imageCompression(file, {
+        maxSizeMB: 0.2,
+        maxWidthOrHeight: 128,
+        useWebWorker: true,
+      });
+
+      const url = await uploadImage({ photo: compressedFile, title: userDoc.id}, (progress) =>
         console.log(`Upload progress: ${progress}%`)
       );
       updateData.profileImage = url;

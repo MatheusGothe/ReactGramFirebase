@@ -173,41 +173,10 @@ const EditProfile = () => {
             value={bio || ""}
           />
         </label>
-        {/* <label>
-          <span>Deseja alterar a senha? Digite sua senha antiga</span>
-          <input
-            type="password"
-            placeholder="Digite a sua senha antiga"
-            onChange={handleChangle(setOldPassword)}
-            value={oldPassword || ""}
-          />
-        </label>
-        <label>
-          <span>Digite sua nova senha</span>
-          <input
-            type="password"
-            placeholder="Digite a sua nova senha"
-            onChange={handleChangle(setPassword)}
-            value={password || ""}
-          />
-        </label>
-        <label>
-          <span>Confirme sua nova senha</span>
-          <input
-            type="password"
-            placeholder="Digite a sua nova senha"
-            onChange={handleChangle(setConfirmNewPassword)}
-            value={confirmNewPassword || ""}
-          />
-        </label> */}
         {!loadingForm && isChanged && <input type="submit" value="Atualizar" />}
         {loadingForm && <input type="submit" value="Aguarde..." disabled />}
         {error && <Message msg={error} type="error" />}
         {message && <Message msg={message} type="success" />}
-        { /*
-        {nameError && <Message msg={"O nome precisa ter 2 caracteres "} type="error" />}
-        {passwordError && <Message msg={"Senhas nao coincidem"} type="error" />}
-        {ErrorTamPassword && <Message msg={"A senha precisa ter no mínimo 6 caracteres"} type="error" /> } */}
       </form>
     </div>
   );

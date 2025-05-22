@@ -12,7 +12,7 @@ const uploadImage = async({photo:image, title: photoId}, onProgress) => {
   }
 
 
-  const storageRef = ref(storage, `images/${photoId}`)
+  const storageRef = ref(storage, `imagesCompressed/${photoId}`)
 
   const uploadTask = uploadBytesResumable(storageRef,image)
   
