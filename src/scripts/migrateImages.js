@@ -45,7 +45,7 @@ async function migrateImages() {
 
       const compressedBuffer = await sharp(buffer)
         .resize(128)
-        .jpeg({ quality: 70 })
+        .jpeg({ quality: 100 })
         .toBuffer();
 
       const destination = file.name.replace('images/', 'imagesCompressed/');
