@@ -68,5 +68,8 @@
     "style-loader": "^3.3.2",
     "vite": "^5.4.8",
     "webpack-cli": "^5.0.1"
-  }
+  },
+    "engines": {
+      "node": "22.x"
+    }
 }
