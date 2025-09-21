@@ -8,14 +8,14 @@ import {getStorage} from 'firebase/storage'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
- // apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  apiKey: 'AIzaSyDbaboHcF_bN7pDLOnrEwyj3hYl63d9f4I',
-  authDomain: "instagramclone-7c9f7.firebaseapp.com",
-  projectId: "instagramclone-7c9f7",
-  storageBucket: "instagramclone-7c9f7.appspot.com",
-  messagingSenderId: "928239404571",
-  appId: "1:928239404571:web:bafe90cf8195cfdc555abe"
+   piKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
+
 
 // Initialize Firebase
 
