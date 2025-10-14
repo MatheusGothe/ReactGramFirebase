@@ -25,7 +25,7 @@ import { useState,useEffect, useContext } from 'react';
 import {auth} from './lib/firebase'
 import { onAuthStateChanged } from 'firebase/auth';
 import { GlobalContext } from './state/context/GlobalContext';
-
+import { Analytics } from "@vercel/analytics/react"
 
 
 
@@ -82,6 +82,7 @@ function App() {
        </div>
         <Footer />
      </BrowserRouter>
+     <Analytics/>
     </div>
   );
 }
